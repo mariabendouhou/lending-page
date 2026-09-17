@@ -1,0 +1,45 @@
+<svg width="200" height="145" viewBox="0 0 200 145" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bellCircleGrad" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#ff8a7a"/>
+      <stop offset="1" stop-color="#f0453d"/>
+    </radialGradient>
+    <radialGradient id="exclaimCircleGrad" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#ff7a6c"/>
+      <stop offset="1" stop-color="#ef4038"/>
+    </radialGradient>
+    <filter id="cardShadow3" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#0f2a20" flood-opacity="0.14"/>
+    </filter>
+    <filter id="circleShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#7a1f18" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- sparkle ticks -->
+  <line x1="30" y1="32" x2="38" y2="10" stroke="#f0453d" stroke-width="5" stroke-linecap="round"/>
+  <line x1="12" y1="40" x2="24" y2="20" stroke="#f0453d" stroke-width="5" stroke-linecap="round"/>
+  <line x1="8" y1="58" x2="20" y2="46" stroke="#f0453d" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- notification card -->
+  <rect x="35" y="40" width="143" height="75" rx="14" fill="#ffffff" filter="url(#cardShadow3)"/>
+
+  <!-- text lines -->
+  <rect x="92" y="67" width="64" height="6" rx="3" fill="#bfe4d6"/>
+  <rect x="92" y="81" width="46" height="6" rx="3" fill="#bfe4d6"/>
+
+  <!-- bell badge -->
+  <g filter="url(#circleShadow)">
+    <circle cx="62" cy="77" r="19" fill="url(#bellCircleGrad)"/>
+  </g>
+  <path d="M62,68 C67,68 70,71.5 70,76 L70,82 L72,85 L52,85 L54,82 L54,76 C54,71.5 57,68 62,68 Z"
+        fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linejoin="round"/>
+  <line x1="59" y1="88" x2="65" y2="88" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round"/>
+
+  <!-- exclamation badge -->
+  <g filter="url(#circleShadow)">
+    <circle cx="173" cy="100" r="17" fill="url(#exclaimCircleGrad)"/>
+  </g>
+  <rect x="171" y="90" width="4" height="14" rx="2" fill="#ffffff"/>
+  <circle cx="173" cy="108" r="2.4" fill="#ffffff"/>
+</svg>

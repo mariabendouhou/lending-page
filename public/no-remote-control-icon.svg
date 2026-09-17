@@ -1,0 +1,57 @@
+<svg width="200" height="165" viewBox="0 0 200 165" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="phoneGrad" x1="51" y1="33" x2="122" y2="158" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4f9d72"/>
+      <stop offset="1" stop-color="#1f5c3a"/>
+    </linearGradient>
+    <linearGradient id="leafGrad3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0e9c4f"/>
+      <stop offset="1" stop-color="#8fdb5e"/>
+    </linearGradient>
+    <filter id="softShadow2" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#123822" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- leaves, behind the phone -->
+  <g transform="translate(128,150) rotate(-25) scale(0.85)">
+    <path d="M0,0 C-14,-10 -12,-38 0,-50 C12,-38 14,-10 0,0 Z" fill="url(#leafGrad3)"/>
+    <path d="M0,-3 L0,-46" stroke="#0c7a44" stroke-width="1.2" opacity="0.6"/>
+  </g>
+  <g transform="translate(146,152) rotate(10) scale(0.95)">
+    <path d="M0,0 C-14,-10 -12,-38 0,-50 C12,-38 14,-10 0,0 Z" fill="url(#leafGrad3)"/>
+    <path d="M0,-3 L0,-46" stroke="#0c7a44" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- sound-wave ticks, left of the phone -->
+  <line x1="36" y1="60" x2="50" y2="50" stroke="#4fae7c" stroke-width="4" stroke-linecap="round"/>
+  <line x1="33" y1="74" x2="50" y2="74" stroke="#4fae7c" stroke-width="4" stroke-linecap="round"/>
+  <line x1="36" y1="88" x2="50" y2="98" stroke="#4fae7c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- phone -->
+  <g transform="translate(86.5,95.5) rotate(6)" filter="url(#softShadow2)">
+    <!-- dark depth/thickness layer, offset so it peeks out on the right and bottom -->
+    <rect x="-28.5" y="-55.5" width="71" height="125" rx="16" fill="#173f28"/>
+    <!-- front face: light bezel outline + white screen -->
+    <rect x="-35.5" y="-62.5" width="71" height="125" rx="16" fill="#fbfeff" stroke="#4a9c6e" stroke-width="7"/>
+    <rect x="-8.5" y="-58" width="17" height="5" rx="2.5" fill="#2a6b46"/>
+
+    <!-- offline-home icon -->
+    <circle cx="0" cy="-4" r="28" fill="#e3f2e6"/>
+    <path d="M0,-26 L16,-12 L16,14 L-16,14 L-16,-12 Z" fill="none" stroke="#3d8a63" stroke-width="4.2" stroke-linejoin="round"/>
+    <line x1="-8" y1="-2" x2="8" y2="-2" stroke="#3d8a63" stroke-width="4.2" stroke-linecap="round"/>
+    <line x1="-22" y1="-30" x2="22" y2="32" stroke="#3d8a63" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- wifi icon with prohibition sign -->
+  <g>
+    <path d="M125,7 A34,34 0 0 1 179,7" stroke="#1f9d5c" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M133,18 A24,24 0 0 1 171,18" stroke="#1f9d5c" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M141,29 A14,14 0 0 1 163,29" stroke="#1f9d5c" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="152" cy="38" r="4" fill="#1f9d5c"/>
+  </g>
+  <g>
+    <circle cx="178" cy="41" r="13" fill="#ffffff" stroke="#ee5f52" stroke-width="5"/>
+    <line x1="169" y1="50" x2="187" y2="32" stroke="#ee5f52" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

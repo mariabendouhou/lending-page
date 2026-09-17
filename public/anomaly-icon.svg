@@ -1,0 +1,68 @@
+<svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#7a1414" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="bellGrad" x1="55" y1="20" x2="105" y2="115" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff8b83"/>
+      <stop offset="1" stop-color="#e23636"/>
+    </linearGradient>
+    <linearGradient id="triGrad" x1="116" y1="62" x2="166" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff6f5e"/>
+      <stop offset="1" stop-color="#dc302f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- small accent dot -->
+  <circle cx="146" cy="27" r="5" fill="#f3a86a" style="paint-order: stroke; stroke:#ffffff; stroke-width:3;"/>
+
+  <!-- sound-wave lines, left of the bell (fan: "/", "-", "\") -->
+  <line x1="18" y1="60" x2="40" y2="49" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <line x1="18" y1="60" x2="40" y2="49" stroke="#f0433f" stroke-width="5" stroke-linecap="round"/>
+  <line x1="13" y1="77" x2="38" y2="77" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <line x1="13" y1="77" x2="38" y2="77" stroke="#f0433f" stroke-width="5" stroke-linecap="round"/>
+  <line x1="18" y1="94" x2="40" y2="105" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <line x1="18" y1="94" x2="40" y2="105" stroke="#f0433f" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- small ticks flanking the crown -->
+  <line x1="53" y1="30" x2="45" y2="40" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <line x1="53" y1="30" x2="45" y2="40" stroke="#f0433f" stroke-width="4" stroke-linecap="round"/>
+  <line x1="97" y1="27" x2="105" y2="35" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <line x1="97" y1="27" x2="105" y2="35" stroke="#f0433f" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- bell -->
+  <g filter="url(#dropShadow)">
+    <circle cx="75" cy="21" r="6" fill="url(#bellGrad)" style="paint-order: stroke; stroke:#ffffff; stroke-width:3;"/>
+    <path d="M 38,98
+             C 38,58 52,26 75,26
+             C 98,26 112,58 112,98
+             L 118,102
+             C 120,105 118,109 113,109
+             L 37,109
+             C 32,109 30,105 32,102
+             Z"
+          fill="url(#bellGrad)" style="paint-order: stroke; stroke:#ffffff; stroke-width:4; stroke-linejoin: round;"/>
+    <ellipse cx="65" cy="50" rx="12" ry="18" fill="#ffffff" opacity="0.28" transform="rotate(-18 65 50)"/>
+    <path d="M 34,109 L 116,109 L 116,113 C 116,117 98,120 75,120 C 52,120 34,117 34,113 Z"
+          fill="#a52426" style="paint-order: stroke; stroke:#ffffff; stroke-width:3; stroke-linejoin: round;"/>
+    <circle cx="75" cy="127" r="7" fill="url(#bellGrad)" style="paint-order: stroke; stroke:#ffffff; stroke-width:3;"/>
+  </g>
+
+  <!-- warning triangle, overlapping the bell's lower-right body -->
+  <g filter="url(#dropShadow)">
+    <path d="M 142.33,65.89
+             L 167.67,112.11
+             Q 172,120 163,120
+             L 113,120
+             Q 104,120 108.33,112.11
+             L 133.67,65.89
+             Q 138,58 142.33,65.89
+             Z"
+          fill="url(#triGrad)" style="paint-order: stroke; stroke:#ffffff; stroke-width:4;"/>
+    <rect x="134" y="76" width="8" height="27" rx="4" fill="#ffffff"/>
+    <circle cx="138" cy="111" r="5" fill="#ffffff"/>
+  </g>
+</svg>
