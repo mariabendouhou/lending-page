@@ -1,0 +1,104 @@
+/**
+ * Section surfaces.
+ *
+ * The page alternates dark green / white all the way down, because six dark
+ * sections in a row read as one undifferentiated slab — "green over green".
+ * Alternating gives the scroll a rhythm and makes each section feel like a
+ * separate idea.
+ *
+ * A section declares `section-dark` or `section-light` and everything inside it
+ * reads its colours from these variables. That way flipping a section's surface
+ * is a one-word change, and no component can be left with the wrong text colour
+ * on the wrong background — which is what happens when each section hardcodes
+ * white or near-black.
+ */
+
+.section-dark {
+  --surface: var(--dark);
+  --surface-2: #0A3227;
+  --text: var(--white);
+  --text-muted: var(--muted-on-dark);
+  --text-faint: var(--faint-on-dark);
+  --card-bg: linear-gradient(165deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.02));
+  --card-border: var(--border-dark);
+  --hairline: var(--border-dark);
+  --eyebrow: var(--green);
+  --accent-ink: var(--green);
+  --icon-stroke: var(--green);
+}
+
+.section-light {
+  --surface: var(--light);
+  --surface-2: var(--white);
+  --text: var(--dark-text);
+  --text-muted: var(--muted-on-light);
+  --text-faint: #6E857B;
+  --card-bg: var(--white);
+  --card-border: var(--border);
+  --hairline: var(--border);
+  --eyebrow: var(--green-deep);
+  --accent-ink: var(--green-deep);
+  /* #69E6B0 on white fails contrast and looks washed out; strokes go deeper. */
+  --icon-stroke: var(--green-deep);
+}
+
+.section-dark,
+.section-light {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ── shared section furniture, themed ─────────────────────────────────────── */
+.section-dark .section-title,
+.section-light .section-title {
+  color: var(--text);
+}
+
+.section-dark .section-lead,
+.section-light .section-lead {
+  color: var(--text-muted);
+}
+
+.section-dark .eyebrow,
+.section-light .eyebrow {
+  color: var(--eyebrow);
+}
+
+/* Line icons inherit the surface's stroke unless a tone was set deliberately. */
+.section-light .line-icon:not([data-tone]) {
+  stroke: var(--icon-stroke);
+}
+
+.section-light .icon-badge {
+  background: rgba(28, 86, 61, 0.08);
+  border-color: rgba(28, 86, 61, 0.15);
+}
+
+/* ── cards ────────────────────────────────────────────────────────────────── */
+.section-light .glow-card,
+.section-light .themed-card {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  box-shadow: 0 14px 34px rgba(16, 37, 31, 0.06);
+}
+
+.section-dark .glow-card,
+.section-dark .themed-card {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  box-shadow: none;
+}
+
+.section-dark .glow-card h3,
+.section-dark .themed-card h3,
+.section-dark .glow-card h4,
+.section-dark .themed-card h4 {
+  color: var(--text);
+}
+
+.section-light .glow-card p,
+.section-light .themed-card p,
+.section-dark .glow-card p,
+.section-dark .themed-card p {
+  color: var(--text-muted);
+}

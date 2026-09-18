@@ -1,652 +1,1331 @@
+/**
+ * Single source of truth for all copy.
+ *
+ * Content is written against docs/PLATFORM-OVERVIEW.md — the real platform, not
+ * an aspirational version of it. Two rules follow from that document and are
+ * enforced here:
+ *
+ *   1. Nothing unbuilt is stated as shipped. The portal's grid domain (sectors,
+ *      substations, load in MW) has no backend, so peak analytics and ESG are
+ *      framed as roadmap. What runs today — the wilaya-scoped map, resident
+ *      reports, field dispatch, public alerts, bill issuance — leads instead.
+ *   2. The relay switches eligible secondary circuits on a claimed kit. It
+ *      cannot disconnect the Sonelgaz supply, and the copy says so.
+ *
+ * Conventions frozen by docs/localization-audit.md §11:
+ *   - Product name: "TaQa Contrôle" (EN/FR) · "طاقة كونترول" (AR — ط, never ت)
+ *   - Tariff band: "tranche" (EN/FR) · "شريحة/الشرائح" (AR)
+ *   - Admin unit:  "wilaya" untranslated in all three
+ *   - Hardware:    "kit" / "kit" / "عدّة" — the paired kit; "module" for the meter unit
+ *   - Carbon:      CO₂ (U+2082), spelled out in Arabic body copy
+ *   - French typography: no-break space ( ) before % : ! ? »
+ *   - Minus sign: − (U+2212), never hyphen-minus
+ *   - Arabic strings mixing Latin/digits carry an LRM (‎) where needed
+ *   - Every headline is ONE string. No <br>-driven splits: CSS controls wrapping.
+ *
+ * The canonical three-beat slogan appears exactly once, as hero.eyebrow.
+ */
+
+export const BRAND = {
+  fr: 'TaQa Contrôle',
+  en: 'TaQa Contrôle',
+  ar: 'طاقة كونترول',
+};
+
+/** Sonelgaz's own e-payment portal, which the app opens in a webview. */
+export const EPAYMENT_HOST = 'epayement.elit.dz';
+
 export const translations = {
   fr: {
+    meta: {
+      locale: 'fr',
+      ogLocale: 'fr_FR',
+      dir: 'ltr',
+      title: 'TaQa Contrôle — Voyez votre consommation avant la facture',
+      description:
+        'Photographiez votre facture Sonelgaz, suivez votre tranche au fil du trimestre, payez sans quitter l’application. Et avec un kit : consommation par circuit et pilotage à distance. Conçu en Algérie.',
+      ogAlt: 'Tableau de bord TaQa Contrôle : consommation par circuit et par tranche Sonelgaz',
+      keywords:
+        'facture Sonelgaz, tranches Sonelgaz, scanner facture, paiement Sonelgaz en ligne, consommation électrique Algérie, relevé compteur, suivi énergie Algérie',
+    },
+
     nav: {
       home: 'Accueil',
-      product: 'Produit',
+      problem: 'Le problème',
       how: 'Comment ça marche',
-      intelligence: 'Intelligence',
-      about: 'À propos',
+      devices: 'Appareils',
+      providers: 'Fournisseurs',
       faq: 'FAQ',
-      cta: 'Commencer',
+      cta: 'Commencer le suivi',
+      menu: 'Menu',
+      close: 'Fermer',
+      language: 'Langue',
     },
+
     hero: {
-      titleLine1: 'Prenez le contrôle',
-      titlePrefix: 'de votre ',
-      titleAccent: 'énergie.',
-      desc: 'TAQA vous aide à comprendre, surveiller et optimiser votre consommation énergétique, tout simplement.',
-      ctaPrimary: 'Commencer avec TAQA',
-      ctaSecondary: 'Découvrir comment ça marche',
-      benefit1: 'Suivi en temps réel',
-      benefit2: 'Moins de dépenses',
-      benefit3: 'Un futur plus durable',
-      metricToday: "Aujourd'hui",
-      metricWeek: 'vs semaine dernière',
-      metricEstimated: 'estimé',
+      eyebrow: 'Voyez. Comprenez. Économisez.',
+      h1: "Le problème, ce n'est pas votre facture. C'est de ne pas la voir venir.",
+      h1Accent: 'de ne pas la voir venir',
+      sub: "Une facture élevée vient d'une consommation que vous ne voyez pas. TaQa Contrôle vous montre en temps réel ce que consomme votre foyer, circuit par circuit, vous indique votre tranche Sonelgaz et vous alerte avant la facture.",
+      proof: [
+        'Suivi en temps réel par circuit',
+        'Votre facture détaillée par tranche',
+        'Alertes : pics, anomalies, budget',
+        'Pilotez vos circuits à distance',
+      ],
+      ctaPrimary: 'Commencer le suivi',
+      ctaSecondary: "Pour les fournisseurs d'énergie",
+      noKit: 'Pas de kit ? Commencez avec votre facture papier.',
+      callouts: [
+        { icon: 'gauge', tone: 'gold', value: '18 kWh', label: 'avant la tranche supérieure' },
+        { icon: 'card', tone: 'green', value: '796 DZD', label: 'dépensés ce trimestre' },
+        { icon: 'leaf', tone: 'greenSoft', value: '147 kg CO₂', label: '≈ 80 arbres pendant un mois' },
+      ],
+      meter: {
+        label: 'Ce trimestre',
+        unit: 'kWh',
+        cost: 'estimé ce trimestre',
+        tranche: 'Tranche',
+        trancheNext: 'avant la tranche',
+        caught: 'Alerte envoyée',
+        caughtDesc: 'Vous approchez de la tranche 3. Il reste {n} kWh.',
+        live: 'En direct',
+      },
     },
-    ps: {
-      tag: 'LES DÉFIS',
-      titleLine1: "L'énergie ne devrait pas",
-      titleLine2: 'être une surprise.',
-      subtitleLine1: 'Trop souvent, on découvre sa consommation sur la facture,',
-      subtitleLine2: 'on subit les coûts et on réagit trop tard. TAQA CONTRÔLE change la donne.',
-      pillar1Title: 'Plus de visibilité',
-      pillar1Desc: 'sur votre consommation',
-      pillar2Title: 'Plus de contrôle',
-      pillar2Desc: 'sur vos dépenses',
-      pillar3Title: 'Une énergie',
-      pillar3Desc: 'plus responsable',
-      problemBadge: 'SANS TAQA CONTRÔLE',
-      problemColTitle: 'Les problèmes du quotidien',
-      problem1Title: 'Pas de visibilité',
-      problem1Desc: 'Vous découvrez votre consommation sur la facture.',
-      problem2Title: 'Des coûts flous',
-      problem2Desc: 'Vous ne savez pas pourquoi votre facture augmente.',
-      problem3Title: 'Des réactions tardives',
-      problem3Desc: 'Vous ne savez pas quand un problème survient.',
-      anomalyBadge: 'Anomalie détectée',
-      anomalyDesc: 'Consommation anormale sur le circuit cuisine.',
-      problem4Title: 'Aucun contrôle à distance',
-      problem4Desc: 'Vous ne pouvez pas gérer vos équipements à distance.',
-      solutionBadge: 'AVEC TAQA CONTRÔLE',
-      solutionColTitle: 'Une solution simple et puissante',
-      sol1Title: 'Suivez en temps réel',
-      sol1Desc: 'Votre consommation, à tout moment.',
-      rtLabel: 'Consommation',
-      sol2Title: 'Comprenez vos coûts',
-      sol2Desc: 'Votre facture détaillée et par tranche.',
-      donutHeading: 'Détail de la facture',
-      legendConsumption: 'Consommation',
-      legendSubscription: 'Abonnement',
-      legendTaxes: 'Taxes',
-      legendOther: 'Autres',
-      sol3Title: 'Soyez alerté',
-      sol3Desc: "En cas d'anomalie ou de dépassement de budget.",
-      alertTitle: 'Alerte budget',
-      alertMsg: 'Vous avez dépassé 80% de votre budget mensuel.',
-      sol4Title: 'Gardez le contrôle',
-      sol4Desc: 'À distance, sur vos circuits et équipements.',
-      switchName: 'Éclairage salon',
-      switchOn: 'On',
-      switchOff: 'Off',
-      bannerTag: '— TAQA CONTRÔLE',
-      bannerLink: 'Plus qu’une application. Une meilleure gestion de votre énergie.',
-      peakProblemTitle: 'Pic de consommation',
-      peakProblemDesc: 'Une forte consommation aux heures de pointe fait grimper votre facture sans prévenir.',
-      peakSolutionTitle: 'Conseils intelligents',
-      peakSolutionDesc: 'Optimisez vos usages aux heures de pointe.',
-      co2ProblemTitle: 'Émissions de CO2',
-      co2ProblemDesc: "Vous ignorez l'impact carbone réel de votre consommation énergétique.",
-      co2SolutionTitle: 'Empreinte carbone',
-      co2SolutionDesc: 'Suivez et réduisez votre empreinte carbone grâce à des indicateurs clairs.',
-      tipBadge: 'Astuce du jour',
-      tipDesc: 'Décalez le chauffe-eau après 22h pour lisser le pic.',
-      co2Badge: 'Empreinte non maîtrisée',
-      co2WidgetDesc: '82 kg de CO2 estimés ce mois-ci.',
-      carbonBadge: 'CO2 ce mois',
-      carbonValue: '-18%',
-      carbonLabel: 'vs mois dernier',
+
+    problem: {
+      eyebrow: 'LE VRAI PROBLÈME',
+      title: 'La facture arrive. Trois mois trop tard.',
+      lead: "Sonelgaz relève votre compteur une fois par trimestre. D'ici là, vous avancez à l'aveugle : une habitude prise en juin ne se paie qu'en septembre.",
+      cards: [
+        {
+          title: 'Une consommation invisible',
+          body: "Impossible de désigner l'appareil responsable. Vous voyez un montant, jamais une cause.",
+          stat: '90',
+          statUnit: 'jours sans aucune information',
+        },
+        {
+          title: 'Le saut de tranche',
+          body: 'Franchir la 2ᵉ tranche multiplie votre prix du kWh par 2,35 — et fait passer la TVA de 9 % à 19 %.',
+          stat: '×2,35',
+          statUnit: 'au 126ᵉ kWh',
+        },
+        {
+          title: "L'été qui coûte cher",
+          body: "Un foyer climatisé dépasse 1 200 kWh sur un trimestre d'été. Chaque kWh au-delà de 1 000 coûte 5,48 DA.",
+          stat: '21 828',
+          statUnit: 'MW au pic national, été 2026',
+        },
+      ],
+      blindspot: {
+        without: 'Sans TAQA Control',
+        withoutSub: "L'énergie tourne. Vous découvrez le coût à l'arrivée de la facture.",
+        with: 'Avec TAQA Control',
+        withSub: 'Consommation, coût et changement de tranche — avant la facture.',
+        blind: '90 jours sans visibilité',
+        bill: 'FACTURE REÇUE',
+        amount: '2 882',
+        currency: 'DZD',
+        months: ['Juin', 'Juillet', 'Août'],
+        usageToday: "Aujourd'hui",
+        usageValue: '7,8 kWh',
+        entered: 'Entrée T3',
+        projected: 'Facture estimée',
+        projectedVal: '~2 640 DZD',
+      },
+      footnote:
+        "Tarifs ménages Sonelgaz, code 54 M : 4 tranches trimestrielles progressives. Les 125 premiers kWh restent toujours au tarif social — seuls les kWh suivants changent de prix. Pic national : Sonelgaz, été 2026.",
     },
+
+    solution: {
+      eyebrow: 'LA VISIBILITÉ',
+      title: 'Votre compteur, enfin lisible.',
+      lead: "Où vous en êtes dans les 4 tranches Sonelgaz, ce qu'il reste avant la suivante, et le montant déjà dû — mis à jour sans attendre le relevé.",
+      pillars: [
+        {
+          title: 'Connaissez votre tranche avant de la franchir',
+          body: "L'échelle des tranches, les tarifs, votre position exacte et les kWh restants avant la marche suivante.",
+        },
+        {
+          title: 'Votre estimation du trimestre, détaillée',
+          body: "Le cumul de vos relevés, réparti tranche par tranche et poste par poste. Toujours présenté comme une estimation, jamais comme un montant validé par Sonelgaz.",
+        },
+        {
+          title: 'Chaque circuit, pas seulement un total',
+          body: "Avec un kit : éclairage, prises, climatisation, chauffe-eau — chaque ligne de votre tableau a sa propre courbe.",
+        },
+      ],
+      tranches: {
+        heading: 'Votre facture, répartie sur les 4 tranches Sonelgaz',
+        legend: ['Tranche 1 — tarif social', 'Tranche 2', 'Tranche 3', 'Tranche 4'],
+        price: 'DA/kWh',
+        you: 'Vous êtes ici',
+      },
+    },
+
+    modes: {
+      eyebrow: 'DEUX FAÇONS DE COMMENCER',
+      title: 'Aucun matériel requis pour démarrer.',
+      lead: "La plupart des foyers commencent sans rien installer. Le kit ajoute le temps réel et le pilotage — il ne conditionne pas l'essentiel.",
+      cards: [
+        {
+          badge: 'Sans matériel',
+          title: 'Votre téléphone et votre facture papier',
+          body: 'Photographiez votre facture Sonelgaz : la lecture automatique remplit les champs, vous les corrigez, et tout est enregistré. Saisissez vos relevés de compteur à la main et suivez votre tranche et votre estimation du trimestre.',
+          points: [
+            'Scan de la facture avec correction avant enregistrement',
+            'Relevés manuels et historique trimestriel',
+            'Échelle des tranches et estimation détaillée',
+            'Paiement sur le portail Sonelgaz, sans quitter l’application',
+          ],
+        },
+        {
+          badge: 'Avec le kit',
+          title: 'Le module de mesure et le pilotage',
+          body: "Un module se pose sur votre tableau électrique, une voie de mesure par circuit. Vous passez du trimestre à la seconde, et vous pouvez agir à distance.",
+          points: [
+            'Consommation en direct, circuit par circuit',
+            'Détail par appareil quand le matériel sait l’attribuer',
+            'Pilotage à distance des circuits secondaires',
+            'Plafond de budget appliqué automatiquement',
+          ],
+        },
+      ],
+      visualAlt: "L'application TaQa Contrôle sur deux téléphones : l'accueil avec la tranche en cours, et l'écran Énergie avec la consommation par appareil",
+      note: "Un foyer sans kit voit une version honnête de l'application, pas une interface pleine d’emplacements vides.",
+    },
+
     how: {
       eyebrow: 'COMMENT ÇA MARCHE',
-      title: 'Un processus simple et efficace',
-      step1Title: 'Connectez',
-      step1Desc: 'Vos équipements énergétiques.',
-      step2Title: 'Mesurez',
-      step2Desc: 'TAQA collecte votre consommation.',
-      step3Title: 'Comprenez',
-      step3Desc: 'Visualisez vos habitudes et vos appareils.',
-      step4Title: 'Optimisez',
-      step4Desc: 'Recevez des recommandations et contrôlez votre consommation.',
+      title: 'De votre facture papier à votre téléphone, en quatre étapes.',
+      steps: [
+        {
+          title: 'Vous vous inscrivez',
+          body: "Un numéro de téléphone et un code reçu par SMS. Vous nommez votre foyer et saisissez votre numéro de compteur.",
+        },
+        {
+          title: 'Vous le renseignez',
+          body: "Photographiez votre facture, ou saisissez un relevé. Avec un kit, la mesure arrive toute seule, chaque seconde et par circuit.",
+        },
+        {
+          title: 'Vous comprenez',
+          body: "Votre tranche, ce qu'il reste avant la suivante, votre estimation du trimestre détaillée poste par poste.",
+        },
+        {
+          title: 'Vous agissez',
+          body: "Payez sur le portail Sonelgaz sans quitter l'application. Avec un kit, coupez un circuit secondaire depuis votre téléphone.",
+        },
+      ],
     },
-    smart: {
-      eyebrow: 'CONTRÔLE INTELLIGENT',
-      titleLine1: 'Ne surveillez pas seulement',
-      titleLine2: 'votre énergie. Contrôlez-la.',
-      desc: 'Gérez vos appareils connectés et priorisez les équipements qui comptent vraiment.',
-      tabEssential: 'Essentiels',
-      tabSecondary: 'Secondaires',
-      deviceFridge: 'Réfrigérateur',
-      deviceLights: 'Éclairage',
-      deviceSecurity: 'Sécurité',
-      deviceEssentialEquip: 'Équipements essentiels',
-      deviceAc: 'Climatiseur Salon',
-      deviceWaterHeater: 'Chauffe-eau',
-      solarTitle: 'Solaire le jour, réseau la nuit.',
-      solarDesc: "TAQA optimise automatiquement vos sources d'énergie selon vos besoins.",
+
+    features: {
+      eyebrow: 'CE QUE VOUS OBTENEZ',
+      title: 'Six choses que votre facture ne vous dira jamais.',
+      items: [
+        {
+          title: 'Votre facture, photographiée',
+          body: "La lecture automatique extrait les champs, vous les corrigez avant enregistrement. Un doublon déclenche un avertissement, jamais un blocage.",
+        },
+        {
+          title: 'Payer sans chercher le portail',
+          body: `L'application ouvre le portail de paiement Sonelgaz et remplit la facture, le montant et la clé pour vous. Aucun bouton de paiement sur une facture déjà réglée.`,
+        },
+        {
+          title: 'Où vous en êtes dans les tranches',
+          body: "Les quatre tranches, leurs tarifs, votre position et les kWh restants avant la marche suivante.",
+        },
+        {
+          title: 'Appareil par appareil',
+          body: "Jour, semaine, mois ou trimestre. La courbe de la période comparée à la précédente, et la part de chaque appareil.",
+        },
+        {
+          title: "L'essentiel reste protégé",
+          body: "Réfrigérateur, congélateur, pompe à eau : marqués P1, sans interrupteur dans l'application. Seuls les appareils P2 se coupent.",
+        },
+        {
+          title: 'Votre foyer, à plusieurs',
+          body: "Plusieurs logements par compte, et le partage d'un foyer avec vos proches en propriétaire, administrateur ou lecteur.",
+        },
+      ],
     },
-    ai: {
-      eyebrow: 'INTELLIGENCE ARTIFICIELLE',
-      title: 'TAQA apprend vos habitudes.',
-      desc: 'Vos habitudes changent avec le temps. TAQA analyse vos consommations pour détecter les anomalies, identifier les gaspillages et vous proposer des actions adaptées.',
-      card1Title: 'Détection',
-      card1Desc: 'Anomalies et consommations inhabituelles.',
-      card2Title: 'Prédiction',
-      card2Desc: 'Estimation de votre consommation.',
-      card3Title: 'Recommandation',
-      card3Desc: 'Actions concrètes pour économiser.',
+
+    dashboard: {
+      eyebrow: 'LE PORTAIL OPÉRATEUR',
+      title: 'La salle de contrôle, sur un seul écran.',
+      lead: "Le portail que voient les équipes Sonelgaz : la carte du réseau par wilaya, la file des signalements, l'éditeur d'alertes et le journal d'audit. Quatre rôles, un périmètre géographique par compte.",
+      bullets: [
+        'Carte du réseau, wilaya par wilaya',
+        'Signalements : accuser, qualifier, attribuer, résoudre',
+        'Alertes publiques avec aperçu des destinataires',
+        'Journal d’audit derrière chaque écriture',
+      ],
+      alt: "Portail opérateur TaQa Contrôle : vue d'ensemble du réseau, carte par wilaya et courbes de charge",
+      hint: 'Déplacez la souris pour incliner l’écran',
+      caption:
+        "Capture du portail. Les indicateurs de charge affichés ici sont illustratifs : le domaine réseau est maquetté, pas encore raccordé (voir la feuille de route).",
     },
-    algeriaCard: {
-      title: "Pensé pour l'Algérie",
-      points: [
-        'Données hébergées localement',
-        'Fonctionnement même avec une connectivité limitée',
-        'Adapté à notre réalité énergétique',
+
+    devices: {
+      eyebrow: 'CONTRÔLE',
+      title: 'Ce que vous pouvez couper — et ce que vous ne pouvez pas.',
+      support: 'Éteignez ce que vous avez oublié, où que vous soyez.',
+      remote: 'Piloté à distance',
+      essentialTitle: 'Appareils essentiels',
+      essentialNote: 'Protégés : pas de coupure depuis l’application.',
+      secondaryTitle: 'Appareils non essentiels',
+      secondaryNote: 'À vous de décider, d’où que vous soyez.',
+      locked: 'Verrouillé',
+      essentials: [
+        { name: 'Réfrigérateur', room: 'Cuisine', icon: 'fridge', watts: 120, dzd: 9 },
+        { name: 'Congélateur', room: 'Cuisine', icon: 'freezer', watts: 95, dzd: 7 },
+        { name: 'Pompe à eau', room: 'Extérieur', icon: 'waterPump', watts: 0, dzd: 3 },
+        { name: 'Éclairage intérieur', room: 'Salon', icon: 'lighting', watts: 40, dzd: 2 },
+      ],
+      secondary: [
+        { name: 'Climatiseur', room: 'Salon', icon: 'ac', watts: 1450, dzd: 34 },
+        { name: 'Four', room: 'Cuisine', icon: 'oven', watts: 2200, dzd: 21 },
+        { name: 'Chauffe-eau', room: 'Salle de bain', icon: 'waterHeater', watts: 1800, dzd: 18 },
+      ],
+      total: 'Total en direct',
+      on: 'Activé',
+      off: 'Éteint',
+      toggleLabel: 'Allumer ou éteindre {name}',
+      extras: [
+        { title: 'Mode absence', body: "L'application le propose quand le logement semble vide, et vous prévient à la fin de la session." },
+        { title: 'Programmations', body: 'Des plages de marche et d’arrêt récurrentes, réglées d’un simple geste.' },
+        { title: 'Effacement du foyer', body: 'Vous choisissez quel circuit cède en premier quand le plafond de budget est atteint.' },
+      ],
+      limit:
+        "Le relais commute les circuits secondaires éligibles d'un kit appairé. Il ne coupe pas votre alimentation Sonelgaz, et un appareil marqué P1 ne peut pas être coupé depuis l'application.",
+    },
+
+    loop: {
+      eyebrow: 'SIGNALEMENTS',
+      title: 'Un signalement arrive à une vraie personne.',
+      lead: "Vous photographiez, vous envoyez. Le signalement entre dans la file des opérateurs qui couvrent votre wilaya, et chaque changement de statut vous revient.",
+      steps: [
+        { title: 'Vous signalez', body: 'Avec photos, depuis le tableau de bord.' },
+        { title: 'L’opérateur accuse réception', body: 'Puis qualifie et attribue le signalement.' },
+        { title: 'Un agent est dépêché', body: 'Un ordre de travail est proposé, accepté, suivi.' },
+        { title: 'Vous êtes tenu informé', body: 'Le statut change chez vous quand il change chez eux.' },
+      ],
+    },
+
+    providers: {
+      eyebrow: "POUR LES FOURNISSEURS D'ÉNERGIE",
+      title: 'Le portail opérateur, de la wilaya jusqu’au compteur.',
+      lead: "Quatre rôles, un périmètre géographique par compte, et un journal d'audit derrière chaque écriture. Le serveur croise ce périmètre avec chaque requête.",
+      items: [
+        {
+          title: 'Carte réseau',
+          body: "Agrégats par wilaya, puis les foyers d'une wilaya, puis un foyer. Les agrégats ne portent aucune coordonnée, à aucun niveau de zoom.",
+        },
+        {
+          title: 'Signalements et terrain',
+          body: "La file des signalements résidents, les transitions accuser réception → qualifier → attribuer → résoudre, et le tableau d’affectation des agents.",
+        },
+        {
+          title: 'Alertes publiques',
+          body: "Un éditeur avec un texte en français et en arabe, ciblage géographique, et un aperçu du nombre de destinataires avant publication.",
+        },
+        {
+          title: 'Émission de factures',
+          body: "Depuis la fiche du foyer, une fois établi de quel foyer il s'agit. Le même numéro de facture deux fois sur un foyer est refusé.",
+        },
+      ],
+      alarms: {
+        title: 'Deux distinctions qui ne se brouillent jamais',
+        items: [
+          {
+            title: 'Le courant de fuite est son propre niveau',
+            body: "Au-dessus de « danger ». Un courant qui trouve un chemin par la plomberie, un mur humide ou une personne n'est pas un risque d'équipement. L'un envoie une équipe au rythme normal ; l'autre l'envoie maintenant.",
+          },
+          {
+            title: 'Un déclenchement n’est pas une coupure réseau',
+            body: "Un déclenchement veut dire que la protection du foyer s'est ouverte et que l'équipe doit aller à la maison. Une coupure veut dire que l'alimentation manque en amont et que l'équipe doit aller au poste. Les confondre envoie l'équipe au mauvais endroit.",
+          },
+        ],
+      },
+      stat: {
+        value: '21 828',
+        unit: 'MW',
+        label: 'pic national, été 2026 — cinquième record de la saison (Sonelgaz)',
+      },
+      roadmap:
+        "Feuille de route : analytique de pointe, effacement et rapports ESG sont conçus et maquettés, sans service derrière eux à ce jour.",
+      cta: 'Demander une démonstration du portail',
+    },
+
+    trust: {
+      eyebrow: 'LA CONFIANCE',
+      triad: ['Simple', 'Sécurisé', 'Algérien'],
+      title: 'Ce que nous refusons d’affirmer.',
+      items: [
+        {
+          title: 'Une estimation reste une estimation',
+          body: "Votre cumul du trimestre est étiqueté comme une estimation partout où il apparaît, et n'est jamais présenté comme un montant validé par Sonelgaz.",
+        },
+        {
+          title: 'Une photo n’est pas une créance',
+          body: "Ce qu'une caméra a cru lire et ce que Sonelgaz a émis ne se ressemblent pas à l'écran. Le premier est la revendication la plus faible, et il est dessiné comme tel.",
+        },
+        {
+          title: 'Hors de votre périmètre : rien',
+          body: "Demander une wilaya hors de son périmètre ne renvoie rien, et non une erreur — distinguer les deux confirmerait qu'une région contient des données à quelqu'un qui ne doit pas les voir.",
+        },
+        {
+          title: '« Envoyé » n’est pas « reçu »',
+          body: "Une notification est enregistrée comme tentée, pas comme reçue. Ce sont deux affirmations différentes et le schéma les garde séparées.",
+        },
+      ],
+      extra: [
+        'Vos données restent en Algérie et ne sont jamais partagées sans votre accord.',
+        'Trois langues, avec miroir complet en arabe. Un numéro de compteur reste lisible de gauche à droite.',
+        'Accessibilité WCAG AA : les états ne se distinguent jamais par la seule couleur.',
         'Électricité aujourd’hui. Eau et gaz demain.',
       ],
     },
-    about: {
-      eyebrow: 'À propos',
-      title: 'Une plateforme analytique nationale pour les statistiques énergétiques',
-      lead: [
-        { text: "Taqa Control s'appuie sur une " },
-        { text: "plateforme nationale d'analyse des données", strong: true },
-        { text: ' de consommation, qui centralise et valorise les informations ' },
-        { text: 'énergétiques', strong: true },
-        { text: " à l'échelle du pays, pour une vision globale, fiable et en temps réel." },
-      ],
-      dashboardPreview: 'APERÇU TABLEAU DE BORD TAQA CONTROL',
-      pillars: [
-        {
-          title: 'Données centralisées',
-          description: 'Une seule source pour toutes les données énergétiques du pays.',
-        },
-        {
-          title: 'Couverture nationale',
-          description: "Analyse par région, wilaya et secteur d'activité.",
-        },
-        {
-          title: 'Fiabilité des indicateurs',
-          description: 'Des données précises et certifiées pour une meilleure prise de décision.',
-        },
-        {
-          title: 'Suivi en temps réel',
-          description: 'Des tableaux de bord dynamiques et toujours à jour.',
-        },
-      ],
-    },
-    scale: {
-      eyebrow: 'Notre vision',
-      titleLine1: "D'une maison",
-      titleLine2: 'à une vision nationale',
-      nodeHome: 'Maison',
-      nodeBuilding: 'Immeuble',
-      nodeCompany: 'Entreprise',
-      nodeCity: 'Ville',
-      nodeCountry: 'Algérie',
-    },
+
     faq: {
-      eyebrow: 'Questions fréquentes',
+      eyebrow: 'QUESTIONS FRÉQUENTES',
       title: "Tout ce qu'il faut savoir avant de commencer",
-      desc: 'Retrouvez les réponses aux questions les plus posées sur la compatibilité, la sécurité et l’installation de TAQA.',
+      desc: "Matériel, sécurité, paiement : les réponses aux questions qui reviennent le plus.",
       items: [
         {
-          q: "Ai-je besoin d'un compteur spécial ?",
-          a: "TAQA se connecte à votre installation existante via un boîtier IoT compatible avec tous les compteurs. Aucun remplacement de compteur n'est nécessaire dans la majorité des cas.",
+          q: "Ai-je besoin de matériel pour commencer ?",
+          a: "Non. Un téléphone et votre facture papier suffisent : vous la photographiez, vous corrigez ce que la lecture automatique a extrait, et vous suivez votre tranche et votre estimation du trimestre. Le kit ajoute le temps réel par circuit et le pilotage à distance — il ne conditionne pas l'essentiel.",
         },
         {
-          q: 'Est-ce compatible avec mon installation actuelle ?',
-          a: "Oui. TAQA s'installe en complément de votre tableau électrique, sans modification lourde des circuits existants.",
+          q: "Ai-je besoin d'un compteur spécial ?",
+          a: "Non. Le kit se pose en complément de votre installation, via un module de mesure compatible avec les compteurs Sonelgaz habituels. Dans la grande majorité des cas, aucun remplacement de compteur n'est nécessaire.",
         },
         {
-          q: 'Mes données sont-elles sécurisées ?',
-          a: 'Vos données de consommation restent sous votre contrôle et sont hébergées localement. Elles ne sont jamais partagées sans votre accord.',
+          q: 'Comment connaissez-vous ma tranche Sonelgaz ?',
+          a: "TaQa Contrôle cumule votre consommation depuis le début de votre trimestre de facturation — à partir de vos relevés, ou de la mesure du kit — et applique le barème ménages en vigueur, à quatre tranches progressives. Vous voyez votre position exacte et les kWh restants avant la tranche suivante.",
         },
         {
-          q: "L'application fonctionne-t-elle sans connexion stable ?",
-          a: 'TAQA est conçu pour rester résilient : les données sont mises en mémoire tampon localement et se synchronisent dès que la connexion revient.',
+          q: 'Puis-je payer ma facture depuis l’application ?',
+          a: `Oui. L'application ouvre le portail de paiement Sonelgaz (${EPAYMENT_HOST}) et renseigne le numéro de facture, le montant et la clé à partir de la facture enregistrée. Le paiement se fait sur le portail Sonelgaz, pas chez nous.`,
         },
         {
-          q: 'TAQA peut-il couper mes appareils tout seul ?',
-          a: "Non. L'intelligence artificielle recommande des actions, mais ne coupe jamais un circuit critique sans votre validation. Vous gardez toujours le contrôle.",
+          q: 'TaQa Contrôle peut-il couper mon électricité ?',
+          a: "Non. Le relais commute les circuits secondaires éligibles d'un kit appairé — un chauffe-eau, un climatiseur. Il ne peut pas couper votre alimentation Sonelgaz, et les circuits que vous marquez comme critiques ne peuvent pas être coupés depuis l'application. C'est une limite de conception, pas un oubli.",
+        },
+        {
+          q: 'Mes données sont-elles sécurisées ?',
+          a: "Vos données sont hébergées en Algérie et ne sont jamais partagées sans votre accord explicite. Les droits d'un lecteur découlent de ses adhésions à un foyer, pas d'une revendication globale de son compte. Vous pouvez exporter vos données ou en demander la suppression à tout moment.",
+        },
+        {
+          q: "L'application fonctionne-t-elle sans connexion stable ?",
+          a: "Un profil et un foyer déjà consultés restent affichés hors ligne. Avec un kit, la mesure continue et remonte au retour du réseau. Un tout premier lancement sans connexion n'a rien à montrer, et le dit.",
+        },
+        {
+          q: 'Puis-je gérer plusieurs logements ?',
+          a: "Oui. Un compte peut porter plusieurs foyers, chacun avec son offre, son matériel et votre rôle. Un foyer se partage avec vos proches en propriétaire, administrateur ou lecteur, par invitation à durée limitée.",
         },
       ],
     },
+
     finalCta: {
-      title: "L'énergie de demain commence par mieux comprendre celle d'aujourd'hui.",
-      button: 'Découvrir TAQA',
+      title: "Votre prochaine facture s'écrit déjà. Commencez à la lire.",
+      sub: 'Commencez avec votre facture papier, aujourd’hui. Le kit viendra quand vous le voudrez.',
+      button: 'Commencer le suivi',
+      secondary: "Pour les fournisseurs d'énergie",
     },
+
     footer: {
-      copyright: '© 2026 TAQA — Tous droits réservés.',
-      tagline: 'Une énergie plus intelligente pour un avenir durable.',
-      terms: "Conditions d'utilisation",
-      privacy: 'Politique de confidentialité',
+      tagline: 'La visibilité avant la facture.',
+      rights: 'Tous droits réservés.',
       devBy: 'Développé par',
+      language: 'Langue',
+      backToTop: 'Haut de page',
+    },
+
+    alt: {
+      logo: 'TaQa Contrôle',
+      heroPhone: "Application TaQa Contrôle affichant la consommation en temps réel par circuit",
+      dashboardScreen: 'Tableau de bord TaQa Contrôle : consommation par circuit et par tranche Sonelgaz',
+      bill: "Facture d'électricité reçue en fin de trimestre",
+      scan: 'Facture papier photographiée dans l’application',
+      anomaly: 'Alerte signalant une consommation anormale sur un circuit',
+      budgetAlert: 'Notification de dépassement de budget mensuel',
+      peak: 'Graphique montrant un pic de consommation',
+      realtime: 'Courbe de consommation en temps réel',
+      remote: 'Téléphone pilotant un circuit à distance',
+      switch: 'Interrupteur connecté commandant un circuit',
+      co2: 'Empreinte carbone exprimée en kilogrammes de CO₂',
+      map: 'Carte du réseau par wilaya',
+    },
+
+    a11y: {
+      icon3dLabel: 'Illustration animée : {name}',
+      chartLabel: 'Graphique : {name}',
+      reducedMotion: 'Animations réduites',
     },
   },
 
   en: {
+    meta: {
+      locale: 'en',
+      ogLocale: 'en_US',
+      dir: 'ltr',
+      title: 'TaQa Contrôle — See your electricity before the bill does',
+      description:
+        'Photograph your Sonelgaz bill, track your tranche as it fills, and pay without leaving the app. Add a kit for per-circuit consumption and remote switching. Built in Algeria.',
+      ogAlt: 'TaQa Contrôle dashboard: consumption by circuit and by Sonelgaz tranche',
+      keywords:
+        'Sonelgaz bill, Sonelgaz tranches, scan electricity bill, pay Sonelgaz online, electricity consumption Algeria, meter reading, energy monitoring Algeria',
+    },
+
     nav: {
       home: 'Home',
-      product: 'Product',
+      problem: 'The problem',
       how: 'How it works',
-      intelligence: 'Intelligence',
-      about: 'About',
+      devices: 'Devices',
+      providers: 'Providers',
       faq: 'FAQ',
-      cta: 'Get started',
+      cta: 'Start monitoring',
+      menu: 'Menu',
+      close: 'Close',
+      language: 'Language',
     },
+
     hero: {
-      titleLine1: 'Take control',
-      titlePrefix: 'of your ',
-      titleAccent: 'energy.',
-      desc: 'TAQA helps you understand, monitor and optimize your energy consumption, effortlessly.',
-      ctaPrimary: 'Get started with TAQA',
-      ctaSecondary: 'Discover how it works',
-      benefit1: 'Real-time tracking',
-      benefit2: 'Lower expenses',
-      benefit3: 'A more sustainable future',
-      metricToday: 'Today',
-      metricWeek: 'vs last week',
-      metricEstimated: 'estimated',
+      eyebrow: 'See it. Understand it. Save.',
+      h1: "Your bill isn't the problem. Not seeing it coming is.",
+      h1Accent: 'Not seeing it coming',
+      sub: 'High bills come from consumption you never see. TaQa Contrôle shows what your home uses in real time, circuit by circuit, tells you which Sonelgaz tranche you’re in, and warns you before the bill does.',
+      proof: [
+        'Real-time tracking per circuit',
+        'Your bill broken down by tranche',
+        'Alerts for peaks, anomalies and budget',
+        'Turn circuits on or off remotely',
+      ],
+      ctaPrimary: 'Start monitoring',
+      ctaSecondary: 'For energy providers',
+      noKit: 'No kit? Start with your paper bill.',
+      callouts: [
+        { icon: 'gauge', tone: 'gold', value: '18 kWh', label: 'before the pricier tranche' },
+        { icon: 'card', tone: 'green', value: '796 DZD', label: 'spent this quarter' },
+        { icon: 'leaf', tone: 'greenSoft', value: '147 kg CO₂', label: '≈ 80 trees for a month' },
+      ],
+      meter: {
+        label: 'This quarter',
+        unit: 'kWh',
+        cost: 'estimated this quarter',
+        tranche: 'Tranche',
+        trancheNext: 'to next tranche',
+        caught: 'Alert sent',
+        caughtDesc: 'You’re approaching tranche 3. {n} kWh left.',
+        live: 'Live',
+      },
     },
-    ps: {
-      tag: 'THE CHALLENGES',
-      titleLine1: 'Energy shouldn’t',
-      titleLine2: 'be a surprise.',
-      subtitleLine1: 'Too often, you discover your consumption on the bill,',
-      subtitleLine2: 'you suffer the costs and react too late. TAQA CONTROL changes that.',
-      pillar1Title: 'More visibility',
-      pillar1Desc: 'into your consumption',
-      pillar2Title: 'More control',
-      pillar2Desc: 'over your spending',
-      pillar3Title: 'More responsible',
-      pillar3Desc: 'energy use',
-      problemBadge: 'WITHOUT TAQA CONTROL',
-      problemColTitle: 'Everyday problems',
-      problem1Title: 'No visibility',
-      problem1Desc: 'You discover your consumption on the bill.',
-      problem2Title: 'Unclear costs',
-      problem2Desc: 'You don’t know why your bill is going up.',
-      problem3Title: 'Late reactions',
-      problem3Desc: 'You don’t know when a problem occurs.',
-      anomalyBadge: 'Anomaly detected',
-      anomalyDesc: 'Abnormal consumption on the kitchen circuit.',
-      problem4Title: 'No remote control',
-      problem4Desc: 'You can’t manage your equipment remotely.',
-      solutionBadge: 'WITH TAQA CONTROL',
-      solutionColTitle: 'A simple, powerful solution',
-      sol1Title: 'Track in real time',
-      sol1Desc: 'Your consumption, at any moment.',
-      rtLabel: 'Consumption',
-      sol2Title: 'Understand your costs',
-      sol2Desc: 'Your detailed, itemized bill.',
-      donutHeading: 'Bill breakdown',
-      legendConsumption: 'Consumption',
-      legendSubscription: 'Subscription',
-      legendTaxes: 'Taxes',
-      legendOther: 'Other',
-      sol3Title: 'Get alerted',
-      sol3Desc: 'In case of an anomaly or budget overrun.',
-      alertTitle: 'Budget alert',
-      alertMsg: 'You’ve exceeded 80% of your monthly budget.',
-      sol4Title: 'Stay in control',
-      sol4Desc: 'Remotely, over your circuits and equipment.',
-      switchName: 'Living room lighting',
-      switchOn: 'On',
-      switchOff: 'Off',
-      bannerTag: '— TAQA CONTROL',
-      bannerLink: 'More than an app. Better management of your energy.',
-      peakProblemTitle: 'Peak demand',
-      peakProblemDesc: 'High usage during peak hours drives up your bill without warning.',
-      peakSolutionTitle: 'Smart recommendations',
-      peakSolutionDesc: 'Optimize your usage during peak hours.',
-      co2ProblemTitle: 'CO2 emissions',
-      co2ProblemDesc: "You don't know the real carbon impact of your energy consumption.",
-      co2SolutionTitle: 'Carbon footprint',
-      co2SolutionDesc: 'Track and reduce your carbon footprint with clear indicators.',
-      tipBadge: 'Tip of the day',
-      tipDesc: 'Shift the water heater to after 10pm to smooth the peak.',
-      co2Badge: 'Untracked footprint',
-      co2WidgetDesc: '82 kg of CO2 estimated this month.',
-      carbonBadge: 'CO2 this month',
-      carbonValue: '-18%',
-      carbonLabel: 'vs last month',
+
+    problem: {
+      eyebrow: 'THE REAL PROBLEM',
+      title: 'The bill arrives. Three months too late.',
+      lead: 'Sonelgaz reads your meter once a quarter. Until then you’re guessing — and a habit you form in June is first priced in September.',
+      cards: [
+        {
+          title: 'Consumption you can’t see',
+          body: 'You can’t name the appliance that did it. You get an amount, never a cause.',
+          stat: '90',
+          statUnit: 'days without feedback',
+        },
+        {
+          title: 'The tranche jump',
+          body: 'Crossing into tranche 2 multiplies your price per kWh by 2.35 — and doubles VAT from 9% to 19%.',
+          stat: '×2.35',
+          statUnit: 'at the 126th kWh',
+        },
+        {
+          title: 'The summer that costs',
+          body: 'An air-conditioned home passes 1,200 kWh in a summer quarter. Every kWh above 1,000 costs 5.48 DA.',
+          stat: '21,828',
+          statUnit: 'MW national peak, summer 2026',
+        },
+      ],
+      blindspot: {
+        without: 'Without TAQA Control',
+        withoutSub: 'Energy keeps running. You see the cost when the bill arrives.',
+        with: 'With TAQA Control',
+        withSub: 'See usage, cost and tariff changes before the bill arrives.',
+        blind: '90 days with no visibility',
+        bill: 'BILL ARRIVES',
+        amount: '2,882',
+        currency: 'DZD',
+        months: ['June', 'July', 'August'],
+        usageToday: 'Today',
+        usageValue: '7.8 kWh',
+        entered: 'Entered T3',
+        projected: 'Estimated bill',
+        projectedVal: '~2,640 DZD',
+      },
+      footnote:
+        'Sonelgaz household tariff, code 54 M: four progressive quarterly tranches. Your first 125 kWh always stay at the social rate — only the kWh above each threshold are repriced. National peak: Sonelgaz, summer 2026.',
     },
+
+    solution: {
+      eyebrow: 'VISIBILITY',
+      title: 'A meter you can finally read.',
+      lead: 'Where you sit across the four Sonelgaz tranches, how much room is left before the next one, and what you already owe — updated without waiting for the reading.',
+      pillars: [
+        {
+          title: 'Know your tranche before you cross it',
+          body: 'The tranche ladder, the rates, your exact position, and the kWh left before the next step up.',
+        },
+        {
+          title: 'Your quarter, itemised',
+          body: 'Your readings accumulated, split per tranche and per charge. Labelled an estimate everywhere it appears, and never presented as a figure Sonelgaz has agreed.',
+        },
+        {
+          title: 'Every circuit, not just a total',
+          body: 'With a kit: lighting, sockets, air conditioning, water heater — every line on your panel gets its own curve.',
+        },
+      ],
+      tranches: {
+        heading: 'Your bill, split across the four Sonelgaz tranches',
+        legend: ['Tranche 1 — social rate', 'Tranche 2', 'Tranche 3', 'Tranche 4'],
+        price: 'DA/kWh',
+        you: 'You are here',
+      },
+    },
+
+    modes: {
+      eyebrow: 'TWO WAYS TO START',
+      title: 'No hardware required to begin.',
+      lead: 'Most households start without installing anything. The kit adds real time and control — it is not the price of entry.',
+      cards: [
+        {
+          badge: 'No hardware',
+          title: 'Your phone and your paper bill',
+          body: 'Photograph your Sonelgaz bill: the reader extracts the fields, you correct them, and it is saved. Enter meter readings by hand and follow your tranche and your estimate for the quarter.',
+          points: [
+            'Bill scanning, with your correction before anything is saved',
+            'Manual readings and quarterly history',
+            'The tranche ladder and an itemised estimate',
+            'Payment on the Sonelgaz portal, without leaving the app',
+          ],
+        },
+        {
+          badge: 'With the kit',
+          title: 'The metering module and remote control',
+          body: 'A module fits onto your electrical panel, one measurement channel per circuit. You move from the quarter to the second — and you can act from anywhere.',
+          points: [
+            'Live consumption, circuit by circuit',
+            'Per-appliance breakdown where the hardware can attribute it',
+            'Remote switching of secondary circuits',
+            'A budget cap enforced automatically',
+          ],
+        },
+      ],
+      visualAlt: 'The TaQa Contrôle app on two phones: the home screen with the current tranche, and the Energy screen with per-appliance usage',
+      note: 'A household without a kit sees an honest version of the app, not a hardware-shaped one with empty slots.',
+    },
+
     how: {
       eyebrow: 'HOW IT WORKS',
-      title: 'A simple and effective process',
-      step1Title: 'Connect',
-      step1Desc: 'Your energy equipment.',
-      step2Title: 'Measure',
-      step2Desc: 'TAQA collects your consumption.',
-      step3Title: 'Understand',
-      step3Desc: 'Visualize your habits and devices.',
-      step4Title: 'Optimize',
-      step4Desc: 'Receive recommendations and control your consumption.',
+      title: 'From your paper bill to your phone, in four steps.',
+      steps: [
+        {
+          title: 'You sign up',
+          body: 'A phone number and a code by SMS. You name your home and enter your meter number.',
+        },
+        {
+          title: 'You feed it',
+          body: 'Photograph a bill, or enter a reading. With a kit, the measurement arrives on its own — every second, per circuit.',
+        },
+        {
+          title: 'You understand',
+          body: 'Your tranche, the room left before the next one, and your estimate for the quarter broken down charge by charge.',
+        },
+        {
+          title: 'You act',
+          body: 'Pay on the Sonelgaz portal without leaving the app. With a kit, switch a secondary circuit off from your phone.',
+        },
+      ],
     },
-    smart: {
-      eyebrow: 'SMART CONTROL',
-      titleLine1: "Don't just monitor",
-      titleLine2: 'your energy. Control it.',
-      desc: 'Manage your connected devices and prioritize the equipment that really matters.',
-      tabEssential: 'Essential',
-      tabSecondary: 'Secondary',
-      deviceFridge: 'Refrigerator',
-      deviceLights: 'Lighting',
-      deviceSecurity: 'Security',
-      deviceEssentialEquip: 'Essential equipment',
-      deviceAc: 'Living room AC',
-      deviceWaterHeater: 'Water heater',
-      solarTitle: 'Solar by day, grid by night.',
-      solarDesc: 'TAQA automatically optimizes your energy sources based on your needs.',
+
+    features: {
+      eyebrow: 'WHAT YOU GET',
+      title: 'Six things your bill will never tell you.',
+      items: [
+        {
+          title: 'Your bill, photographed',
+          body: 'The reader extracts the fields and you correct them before anything is saved. A duplicate raises a warning, never a block.',
+        },
+        {
+          title: 'Pay without hunting for the portal',
+          body: `The app opens the Sonelgaz payment portal and fills in the invoice, the amount and the key for you. No pay control is offered on a bill already settled.`,
+        },
+        {
+          title: 'Where you sit in the tranches',
+          body: 'All four tranches, their rates, your position, and the kWh left before the next step up.',
+        },
+        {
+          title: 'Appliance by appliance',
+          body: 'Day, week, month or quarter. This period’s curve against the last, and every appliance’s share of it.',
+        },
+        {
+          title: 'The essentials stay protected',
+          body: 'Fridge, freezer, water pump: marked P1, with no switch in the app at all. Only P2 appliances can be cut.',
+        },
+        {
+          title: 'Your home, shared',
+          body: 'Several homes on one account, and a home shared with your family as owner, admin or viewer.',
+        },
+      ],
     },
-    ai: {
-      eyebrow: 'ARTIFICIAL INTELLIGENCE',
-      title: 'TAQA learns your habits.',
-      desc: 'Your habits change over time. TAQA analyzes your consumption to detect anomalies, identify waste, and suggest suitable actions.',
-      card1Title: 'Detection',
-      card1Desc: 'Anomalies and unusual consumption.',
-      card2Title: 'Prediction',
-      card2Desc: 'Estimation of your consumption.',
-      card3Title: 'Recommendation',
-      card3Desc: 'Concrete actions to save money.',
+
+    dashboard: {
+      eyebrow: 'THE OPERATOR PORTAL',
+      title: 'The control room, on one screen.',
+      lead: 'The portal Sonelgaz teams see: the network map by wilaya, the resident-report inbox, the public-alert composer and the audit log. Four roles, one geographic scope per account.',
+      bullets: [
+        'The network map, wilaya by wilaya',
+        'Reports: acknowledge, triage, assign, resolve',
+        'Public alerts with a recipient preview',
+        'An audit row behind every write',
+      ],
+      alt: 'TaQa Contrôle operator portal: network overview, map by wilaya and load curves',
+      hint: 'Move your cursor to tilt the screen',
+      caption:
+        'A portal screenshot. The load figures shown here are illustrative: the grid domain is prototyped, not yet wired (see the roadmap).',
     },
-    algeriaCard: {
-      title: 'Designed for Algeria',
-      points: [
-        'Data hosted locally',
-        'Works even with limited connectivity',
-        'Adapted to our energy reality',
+
+    devices: {
+      eyebrow: 'CONTROL',
+      title: 'What you can switch off — and what you can’t.',
+      support: 'Turn off what you forgot, from anywhere.',
+      remote: 'Controlled remotely',
+      essentialTitle: 'Essential appliances',
+      essentialNote: 'Protected: no switching off from the app.',
+      secondaryTitle: 'Non-essential appliances',
+      secondaryNote: 'Yours to decide, from wherever you are.',
+      locked: 'Locked',
+      essentials: [
+        { name: 'Fridge', room: 'Kitchen', icon: 'fridge', watts: 120, dzd: 9 },
+        { name: 'Freezer', room: 'Kitchen', icon: 'freezer', watts: 95, dzd: 7 },
+        { name: 'Water pump', room: 'Outdoors', icon: 'waterPump', watts: 0, dzd: 3 },
+        { name: 'Indoor lights', room: 'Living room', icon: 'lighting', watts: 40, dzd: 2 },
+      ],
+      secondary: [
+        { name: 'Air conditioner', room: 'Living room', icon: 'ac', watts: 1450, dzd: 34 },
+        { name: 'Oven', room: 'Kitchen', icon: 'oven', watts: 2200, dzd: 21 },
+        { name: 'Water heater', room: 'Bathroom', icon: 'waterHeater', watts: 1800, dzd: 18 },
+      ],
+      total: 'Live total',
+      on: 'On',
+      off: 'Off',
+      toggleLabel: 'Turn {name} on or off',
+      extras: [
+        { title: 'Away mode', body: 'The app offers it when the home looks empty, and tells you when the session lapses.' },
+        { title: 'Schedules', body: 'Recurring on and off windows, set with a picker built for thumbs.' },
+        { title: 'Household shedding', body: 'You choose which circuit yields first when the budget cap is reached.' },
+      ],
+      limit:
+        'The relay switches eligible secondary circuits on a paired kit. It cannot disconnect your Sonelgaz supply, and anything marked P1 cannot be switched off from the app at all.',
+    },
+
+    loop: {
+      eyebrow: 'REPORTS',
+      title: 'A problem you report reaches somebody.',
+      lead: 'You photograph it and send it. The report lands in the inbox of the operators who cover your wilaya, and every status change comes back to you.',
+      steps: [
+        { title: 'You report it', body: 'With photos, from the dashboard.' },
+        { title: 'An operator acknowledges', body: 'Then triages and assigns the report.' },
+        { title: 'An agent is dispatched', body: 'A work order is offered, accepted, tracked.' },
+        { title: 'You are kept informed', body: 'The status changes for you when it changes for them.' },
+      ],
+    },
+
+    providers: {
+      eyebrow: 'FOR ENERGY PROVIDERS',
+      title: 'The operator portal, from the wilaya down to the meter.',
+      lead: 'Four roles, a geographic scope per account, and an audit row behind every write. The server intersects that scope with every request.',
+      items: [
+        {
+          title: 'Network map',
+          body: 'Aggregates per wilaya, then the households in one wilaya, then one household. Aggregates carry no coordinates, at any zoom level.',
+        },
+        {
+          title: 'Reports and field work',
+          body: 'The resident-report inbox, the acknowledge → triage → assign → resolve transitions, and the agent dispatch board beside them.',
+        },
+        {
+          title: 'Public alerts',
+          body: 'A composer with French and Arabic copy, geographic targeting, and a recipient count previewed before you publish.',
+        },
+        {
+          title: 'Bill issuance',
+          body: 'From the household panel, once it is established which household this is. The same invoice number twice against one household is refused.',
+        },
+      ],
+      alarms: {
+        title: 'Two distinctions that never blur',
+        items: [
+          {
+            title: 'Leakage current is its own tier',
+            body: 'Above “danger”. Current finding a path through plumbing, a damp wall, or a person is not an equipment risk. One dispatches a crew at normal pace; the other dispatches one now.',
+          },
+          {
+            title: 'A home trip is not a grid outage',
+            body: 'A trip means the household’s own protection opened and the crew should go to the house. An outage means supply is gone upstream and the crew should go to the substation. Conflating them sends a crew to the wrong place.',
+          },
+        ],
+      },
+      stat: {
+        value: '21,828',
+        unit: 'MW',
+        label: 'national peak, summer 2026 — the fifth record of the season (Sonelgaz)',
+      },
+      roadmap:
+        'Roadmap: peak analytics, load shedding and ESG reporting are designed and prototyped, with no service behind them yet.',
+      cta: 'Request a portal demo',
+    },
+
+    trust: {
+      eyebrow: 'TRUST',
+      triad: ['Simple', 'Secure', 'Algerian'],
+      title: 'What we refuse to claim.',
+      items: [
+        {
+          title: 'An estimate stays an estimate',
+          body: 'Your running total for the quarter is labelled an estimate everywhere it appears, and is never presented as a figure Sonelgaz has agreed.',
+        },
+        {
+          title: 'A photograph is not a debt',
+          body: 'What a camera thought it read and what Sonelgaz issued do not look alike on screen. The first is the weaker claim, and it is drawn as one.',
+        },
+        {
+          title: 'Outside your scope: nothing',
+          body: 'Asking for a wilaya outside your scope returns nothing, not an error — distinguishing the two would confirm that a region holds data to someone who may not see it.',
+        },
+        {
+          title: '“Sent” is not “received”',
+          body: 'A notification is recorded as attempted, not as received. They are different claims and the schema keeps them apart.',
+        },
+      ],
+      extra: [
+        'Your data stays in Algeria and is never shared without your consent.',
+        'Three languages, with full RTL mirroring. A meter number still reads left to right.',
+        'WCAG AA accessibility: states are never distinguished by colour alone.',
         'Electricity today. Water and gas tomorrow.',
       ],
     },
-    about: {
-      eyebrow: 'About',
-      title: 'A national analytics platform for energy statistics',
-      lead: [
-        { text: 'Taqa Control relies on a ' },
-        { text: 'national data analytics platform', strong: true },
-        { text: ' for consumption, centralizing and enhancing ' },
-        { text: 'energy information', strong: true },
-        { text: ' nationwide, for a global, reliable and real-time view.' },
-      ],
-      dashboardPreview: 'TAQA CONTROL DASHBOARD PREVIEW',
-      pillars: [
-        {
-          title: 'Centralized data',
-          description: 'A single source for all the country’s energy data.',
-        },
-        {
-          title: 'National coverage',
-          description: 'Analysis by region, province and sector of activity.',
-        },
-        {
-          title: 'Reliable indicators',
-          description: 'Accurate, certified data for better decision-making.',
-        },
-        {
-          title: 'Real-time monitoring',
-          description: 'Dynamic dashboards, always up to date.',
-        },
-      ],
-    },
-    scale: {
-      eyebrow: 'Our vision',
-      titleLine1: 'From a home',
-      titleLine2: 'to a national vision',
-      nodeHome: 'Home',
-      nodeBuilding: 'Building',
-      nodeCompany: 'Company',
-      nodeCity: 'City',
-      nodeCountry: 'Algeria',
-    },
+
     faq: {
-      eyebrow: 'Frequently asked questions',
+      eyebrow: 'FREQUENTLY ASKED QUESTIONS',
       title: 'Everything you need to know before getting started',
-      desc: 'Find answers to the most common questions about compatibility, security and TAQA installation.',
+      desc: 'Hardware, security, payment: answers to the questions that come up most.',
       items: [
         {
-          q: 'Do I need a special meter?',
-          a: 'TAQA connects to your existing setup via an IoT box compatible with all meters. No meter replacement is needed in most cases.',
+          q: 'Do I need hardware to start?',
+          a: 'No. A phone and your paper bill are enough: photograph it, correct whatever the reader extracted, and follow your tranche and your estimate for the quarter. The kit adds real time per circuit and remote switching — it is not the price of entry.',
         },
         {
-          q: 'Is it compatible with my current installation?',
-          a: 'Yes. TAQA installs alongside your electrical panel, without major changes to existing circuits.',
+          q: 'Do I need a special meter?',
+          a: 'No. The kit sits alongside your existing installation, using a metering module compatible with the usual Sonelgaz meters. In the large majority of cases no meter replacement is needed.',
+        },
+        {
+          q: 'How do you know my Sonelgaz tranche?',
+          a: 'TaQa Contrôle accumulates your consumption from the start of your billing quarter — from your readings, or from the kit’s measurement — and applies the household tariff in force, with its four progressive tranches. You see your exact position and the kWh left before the next tranche.',
+        },
+        {
+          q: 'Can I pay my bill from the app?',
+          a: `Yes. The app opens the Sonelgaz payment portal (${EPAYMENT_HOST}) and fills in the invoice number, the amount and the key from the bill on file. The payment happens on the Sonelgaz portal, not with us.`,
+        },
+        {
+          q: 'Can TaQa Contrôle cut off my electricity?',
+          a: 'No. The relay switches eligible secondary circuits on a paired kit — a water heater, an air conditioner. It cannot disconnect your Sonelgaz supply, and circuits you mark as critical cannot be switched off from the app at all. That is a design limit, not an omission.',
         },
         {
           q: 'Is my data secure?',
-          a: 'Your consumption data stays under your control and is hosted locally. It is never shared without your consent.',
+          a: 'Your data is hosted in Algeria and is never shared without your explicit consent. What a reader may do is resolved from their memberships of a home, not from an account-wide claim. You can export your data or request its deletion at any time.',
         },
         {
           q: 'Does the app work without a stable connection?',
-          a: 'TAQA is designed to be resilient: data is buffered locally and syncs as soon as the connection returns.',
+          a: 'A profile and a home you have already opened stay visible offline. With a kit, measurement continues and uploads when the network returns. A very first run with no connection has nothing to show, and says so.',
         },
         {
-          q: 'Can TAQA cut off my devices on its own?',
-          a: 'No. The AI recommends actions but never cuts a critical circuit without your approval. You always stay in control.',
+          q: 'Can I manage several homes?',
+          a: 'Yes. One account can hold several homes, each with its own plan, hardware and your role in it. A home is shared with your family as owner, admin or viewer, by invitations that expire.',
         },
       ],
     },
+
     finalCta: {
-      title: 'Tomorrow’s energy starts with better understanding today’s.',
-      button: 'Discover TAQA',
+      title: 'Your next bill is already being written. Start reading it.',
+      sub: 'Start with your paper bill today. The kit can come whenever you want it.',
+      button: 'Start monitoring',
+      secondary: 'For energy providers',
     },
+
     footer: {
-      copyright: '© 2026 TAQA — All rights reserved.',
-      tagline: 'Smarter energy for a more sustainable future.',
-      terms: 'Terms of use',
-      privacy: 'Privacy policy',
+      tagline: 'Visibility before the bill.',
+      rights: 'All rights reserved.',
       devBy: 'Developed by',
+      language: 'Language',
+      backToTop: 'Back to top',
+    },
+
+    alt: {
+      logo: 'TaQa Contrôle',
+      heroPhone: 'The TaQa Contrôle app showing real-time consumption per circuit',
+      dashboardScreen: 'TaQa Contrôle dashboard: consumption by circuit and by Sonelgaz tranche',
+      bill: 'An electricity bill received at the end of the quarter',
+      scan: 'A paper bill photographed in the app',
+      anomaly: 'An alert flagging abnormal consumption on one circuit',
+      budgetAlert: 'A notification that the monthly budget has been exceeded',
+      peak: 'A chart showing a consumption peak',
+      realtime: 'A real-time consumption curve',
+      remote: 'A phone switching a circuit off remotely',
+      switch: 'A connected switch controlling a circuit',
+      co2: 'A carbon footprint expressed in kilograms of CO₂',
+      map: 'A map of the network by wilaya',
+    },
+
+    a11y: {
+      icon3dLabel: 'Animated illustration: {name}',
+      chartLabel: 'Chart: {name}',
+      reducedMotion: 'Reduced motion',
     },
   },
 
   ar: {
+    meta: {
+      locale: 'ar',
+      ogLocale: 'ar_DZ',
+      dir: 'rtl',
+      title: 'طاقة كونترول — شاهد استهلاكك قبل أن تصلك الفاتورة',
+      description:
+        'صوّر فاتورة سونلغاز، وتابع موقعك في الشرائح، وادفع دون أن تخرج من التطبيق. وبإضافة وحدة القياس: استهلاك لكل دائرة وتحكّم عن بُعد. صُمّم في الجزائر.',
+      ogAlt: 'لوحة تحكّم طاقة كونترول: الاستهلاك حسب الدائرة وحسب شريحة سونلغاز',
+      keywords:
+        'فاتورة سونلغاز، شرائح سونلغاز، تصوير الفاتورة، دفع فاتورة سونلغاز، استهلاك الكهرباء الجزائر، قراءة العدّاد، متابعة الطاقة',
+    },
+
     nav: {
       home: 'الرئيسية',
-      product: 'المنتج',
+      problem: 'المشكلة',
       how: 'كيف يعمل',
-      intelligence: 'الذكاء',
-      about: 'حول',
+      devices: 'الأجهزة',
+      providers: 'المزوّدون',
       faq: 'الأسئلة الشائعة',
-      cta: 'ابدأ الآن',
+      cta: 'ابدأ المتابعة',
+      menu: 'القائمة',
+      close: 'إغلاق',
+      language: 'اللغة',
     },
+
     hero: {
-      titleLine1: 'تحكّم',
-      titlePrefix: 'في ',
-      titleAccent: 'طاقتك.',
-      desc: 'تساعدك تاقا على فهم ومراقبة وتحسين استهلاكك للطاقة، بكل بساطة.',
-      ctaPrimary: 'ابدأ مع تاقا',
-      ctaSecondary: 'اكتشف كيف يعمل',
-      benefit1: 'متابعة في الوقت الفعلي',
-      benefit2: 'نفقات أقل',
-      benefit3: 'مستقبل أكثر استدامة',
-      metricToday: 'اليوم',
-      metricWeek: 'مقارنة بالأسبوع الماضي',
-      metricEstimated: 'تقديري',
+      eyebrow: 'راقب. افهم. وفّر.',
+      h1: 'المشكلة ليست في فاتورتك، بل في أنك لا تراها قادمة.',
+      h1Accent: 'لا تراها قادمة',
+      sub: 'الفاتورة المرتفعة سببها استهلاك لا تراه. يُريك طاقة كونترول ما يستهلكه منزلك لحظة بلحظة، دائرةً بدائرة، ويُعلمك بشريحتك في تسعيرة سونلغاز، وينبّهك قبل أن تفاجئك الفاتورة.',
+      proof: [
+        'متابعة لحظية لكل دائرة',
+        'تفصيل فاتورتك حسب الشرائح',
+        'تنبيهات الذروة والأعطال والميزانية',
+        'تحكّم في دوائرك عن بُعد',
+      ],
+      ctaPrimary: 'ابدأ المتابعة',
+      ctaSecondary: 'لمزوّدي الطاقة',
+      noKit: 'لا تملك الوحدة؟ ابدأ بفاتورتك الورقية.',
+      callouts: [
+        { icon: 'gauge', tone: 'gold', value: '١٨ كيلوواط‑ساعة', label: 'قبل الشريحة الأغلى' },
+        { icon: 'card', tone: 'green', value: '٧٩٦ دج', label: 'أُنفقت هذا الفصل' },
+        { icon: 'leaf', tone: 'greenSoft', value: '١٤٧ كغ CO₂', label: '≈ ٨٠ شجرة لمدّة شهر' },
+      ],
+      meter: {
+        label: 'هذا الفصل',
+        unit: 'كيلوواط‑ساعة',
+        cost: 'تقديري هذا الفصل',
+        tranche: 'الشريحة',
+        trancheNext: 'قبل الشريحة التالية',
+        caught: 'تم إرسال تنبيه',
+        caughtDesc: 'أنت تقترب من الشريحة الثالثة. بقي {n} كيلوواط‑ساعة.',
+        live: 'مباشر',
+      },
     },
-    ps: {
-      tag: 'التحديات',
-      titleLine1: 'الطاقة لا ينبغي',
-      titleLine2: 'أن تكون مفاجأة.',
-      subtitleLine1: 'غالبًا ما نكتشف استهلاكنا عند استلام الفاتورة،',
-      subtitleLine2: 'ونتحمل التكاليف ونتصرف بعد فوات الأوان. تاقا كنترول تغيّر كل ذلك.',
-      pillar1Title: 'رؤية أوضح',
-      pillar1Desc: 'لاستهلاكك',
-      pillar2Title: 'تحكم أكبر',
-      pillar2Desc: 'في نفقاتك',
-      pillar3Title: 'طاقة',
-      pillar3Desc: 'أكثر مسؤولية',
-      problemBadge: 'بدون تاقا كنترول',
-      problemColTitle: 'مشاكل الحياة اليومية',
-      problem1Title: 'غياب الرؤية',
-      problem1Desc: 'تكتشف استهلاكك عند وصول الفاتورة.',
-      problem2Title: 'تكاليف غامضة',
-      problem2Desc: 'لا تعرف لماذا ترتفع فاتورتك.',
-      problem3Title: 'ردود فعل متأخرة',
-      problem3Desc: 'لا تعرف متى تحدث المشكلة.',
-      anomalyBadge: 'تم اكتشاف خلل',
-      anomalyDesc: 'استهلاك غير طبيعي في دائرة المطبخ.',
-      problem4Title: 'لا تحكم عن بعد',
-      problem4Desc: 'لا يمكنك إدارة أجهزتك عن بعد.',
-      solutionBadge: 'مع تاقا كنترول',
-      solutionColTitle: 'حل بسيط وفعال',
-      sol1Title: 'تابع في الوقت الفعلي',
-      sol1Desc: 'استهلاكك، في أي لحظة.',
-      rtLabel: 'الاستهلاك',
-      sol2Title: 'افهم تكاليفك',
-      sol2Desc: 'فاتورتك مفصلة وموزعة بالشرائح.',
-      donutHeading: 'تفاصيل الفاتورة',
-      legendConsumption: 'الاستهلاك',
-      legendSubscription: 'الاشتراك',
-      legendTaxes: 'الضرائب',
-      legendOther: 'أخرى',
-      sol3Title: 'كن على اطلاع',
-      sol3Desc: 'في حال حدوث خلل أو تجاوز للميزانية.',
-      alertTitle: 'تنبيه الميزانية',
-      alertMsg: 'لقد تجاوزت 80% من ميزانيتك الشهرية.',
-      sol4Title: 'احتفظ بالتحكم',
-      sol4Desc: 'عن بعد، في دوائرك وأجهزتك.',
-      switchName: 'إضاءة الصالون',
-      switchOn: 'تشغيل',
-      switchOff: 'إيقاف',
-      bannerTag: '— تاقا كنترول',
-      bannerLink: 'أكثر من مجرد تطبيق. إدارة أفضل لطاقتك.',
-      peakProblemTitle: 'ذروة الاستهلاك',
-      peakProblemDesc: 'الاستهلاك المرتفع في ساعات الذروة يرفع فاتورتك دون سابق إنذار.',
-      peakSolutionTitle: 'توصيات ذكية',
-      peakSolutionDesc: 'حسّن استخدامك في ساعات الذروة.',
-      co2ProblemTitle: 'انبعاثات ثاني أكسيد الكربون',
-      co2ProblemDesc: 'لا تعرف الأثر الكربوني الحقيقي لاستهلاكك من الطاقة.',
-      co2SolutionTitle: 'البصمة الكربونية',
-      co2SolutionDesc: 'تتبع بصمتك الكربونية وقلّلها بفضل مؤشرات واضحة.',
-      tipBadge: 'نصيحة اليوم',
-      tipDesc: 'أجّل تشغيل سخان الماء إلى ما بعد الساعة 22:00 لتخفيف الذروة.',
-      co2Badge: 'بصمة غير متحكم بها',
-      co2WidgetDesc: 'ما يقدَّر بـ 82 كغ من CO2 هذا الشهر.',
-      carbonBadge: 'CO2 هذا الشهر',
-      carbonValue: '-18%',
-      carbonLabel: 'مقارنة بالشهر الماضي',
+
+    problem: {
+      eyebrow: 'المشكلة الحقيقية',
+      title: 'تأتي الفاتورة، بعد ثلاثة أشهر من فوات الأوان.',
+      lead: 'تقرأ سونلغاز عدّادك مرّة كل ثلاثة أشهر. إلى ذلك الحين أنت تُخمّن — وما تعتاده في جوان لا تدفعه إلا في سبتمبر.',
+      cards: [
+        {
+          title: 'استهلاك لا تراه',
+          body: 'لا تستطيع تحديد الجهاز المسؤول. يصلك مبلغ، ولا يصلك سبب أبدًا.',
+          stat: '٩٠',
+          statUnit: 'يومًا دون أي مؤشّر',
+        },
+        {
+          title: 'قفزة الشريحة',
+          body: 'تجاوز الشريحة الثانية يضاعف سعر الكيلوواط‑ساعة ٢٫٣٥ مرّة، ويرفع الرسم على القيمة المضافة من ٩٪ إلى ١٩٪.',
+          stat: '×٢٫٣٥',
+          statUnit: 'عند الكيلوواط‑ساعة ١٢٦',
+        },
+        {
+          title: 'صيف مكلِف',
+          body: 'منزل مكيّف يتجاوز ١٢٠٠ كيلوواط‑ساعة في فصل الصيف. وكل كيلوواط‑ساعة بعد ١٠٠٠ يُحتسب بـ ٥٫٤٨ دج.',
+          stat: '٢١٨٢٨',
+          statUnit: 'ميغاواط في الذروة الوطنية، صيف ٢٠٢٦',
+        },
+      ],
+      blindspot: {
+        without: 'بدون TAQA Control',
+        withoutSub: 'الطاقة تعمل باستمرار. لا ترى التكلفة إلا عند وصول الفاتورة.',
+        with: 'مع TAQA Control',
+        withSub: 'الاستهلاك والتكلفة وتغيّر الشريحة — قبل الفاتورة.',
+        blind: '٩٠ يومًا بلا رؤية',
+        bill: 'وصلت الفاتورة',
+        amount: '٢٨٨٢',
+        currency: 'دج',
+        months: ['جوان', 'جويلية', 'أوت'],
+        usageToday: 'اليوم',
+        usageValue: '٧٫٨ كيلوواط‑س',
+        entered: 'دخلت ش٣',
+        projected: 'الفاتورة المتوقّعة',
+        projectedVal: '~٢٦٤٠ دج',
+      },
+      footnote:
+        'تسعيرة سونلغاز للمنازل، الرمز 54 M‎: أربع شرائح فصلية تصاعدية. أول ١٢٥ كيلوواط‑ساعة تبقى دائمًا بالتسعيرة الاجتماعية — ولا يُعاد تسعير إلا ما يزيد عن كل حدّ. الذروة الوطنية: سونلغاز، صيف ٢٠٢٦.',
     },
+
+    solution: {
+      eyebrow: 'الرؤية',
+      title: 'عدّاد يمكنك أخيرًا قراءته.',
+      lead: 'موقعك بين شرائح سونلغاز الأربع، وما بقي لك قبل الشريحة التالية، وما تدين به فعلًا — محدَّثًا دون انتظار قراءة العدّاد.',
+      pillars: [
+        {
+          title: 'اعرف شريحتك قبل أن تتجاوزها',
+          body: 'سلّم الشرائح وأسعارها، وموقعك بدقّة، وما بقي من كيلوواط‑ساعة قبل الدرجة التالية.',
+        },
+        {
+          title: 'تقدير فصلك، مفصّلًا',
+          body: 'مجموع قراءاتك موزّعًا على الشرائح وعلى بنود الفاتورة. يُوصَف بأنه تقدير في كل موضع يظهر فيه، ولا يُقدَّم أبدًا كمبلغ أقرّته سونلغاز.',
+        },
+        {
+          title: 'كل دائرة، لا المجموع فقط',
+          body: 'مع الوحدة: الإنارة والمقابس والمكيّف وسخّان الماء — لكل خط في لوحتك منحناه الخاص.',
+        },
+      ],
+      tranches: {
+        heading: 'فاتورتك موزّعة على شرائح سونلغاز الأربع',
+        legend: ['الشريحة ١ — التسعيرة الاجتماعية', 'الشريحة ٢', 'الشريحة ٣', 'الشريحة ٤'],
+        price: 'دج/كيلوواط‑ساعة',
+        you: 'أنت هنا',
+      },
+    },
+
+    modes: {
+      eyebrow: 'طريقتان للبدء',
+      title: 'لا تحتاج إلى أي جهاز لتبدأ.',
+      lead: 'معظم المنازل تبدأ دون تركيب أي شيء. وحدة القياس تضيف المتابعة اللحظية والتحكّم — وليست شرطًا للبدء.',
+      cards: [
+        {
+          badge: 'دون أجهزة',
+          title: 'هاتفك وفاتورتك الورقية',
+          body: 'صوّر فاتورة سونلغاز: تستخرج القراءة الآلية الحقول، فتصحّحها أنت، ثم تُحفَظ. أدخل قراءات عدّادك يدويًا وتابع شريحتك وتقدير فصلك.',
+          points: [
+            'تصوير الفاتورة، مع تصحيحك قبل أي حفظ',
+            'قراءات يدوية وسجل فصلي',
+            'سلّم الشرائح وتقدير مفصّل',
+            'الدفع على بوّابة سونلغاز دون الخروج من التطبيق',
+          ],
+        },
+        {
+          badge: 'مع الوحدة',
+          title: 'وحدة القياس والتحكّم عن بُعد',
+          body: 'تُثبّت وحدة على لوحتك الكهربائية، بقناة قياس لكل دائرة. فتنتقل من الفصل إلى الثانية، ويصبح بإمكانك التحكّم من أي مكان.',
+          points: [
+            'استهلاك مباشر، دائرةً بدائرة',
+            'تفصيل حسب الجهاز حيث تستطيع الوحدة تمييزه',
+            'تشغيل وإطفاء الدوائر الثانوية عن بُعد',
+            'سقف ميزانية يُطبَّق تلقائيًا',
+          ],
+        },
+      ],
+      visualAlt: 'تطبيق طاقة كونترول على هاتفين: الشاشة الرئيسية مع الشريحة الحالية، وشاشة الطاقة مع الاستهلاك حسب الجهاز',
+      note: 'المنزل بلا وحدة يرى نسخة صادقة من التطبيق، لا واجهة مثقوبة بخانات فارغة.',
+    },
+
     how: {
       eyebrow: 'كيف يعمل',
-      title: 'عملية بسيطة وفعالة',
-      step1Title: 'اتصل',
-      step1Desc: 'أجهزتك الكهربائية.',
-      step2Title: 'قِس',
-      step2Desc: 'تجمع تاقا استهلاكك.',
-      step3Title: 'افهم',
-      step3Desc: 'تصوّر عاداتك وأجهزتك.',
-      step4Title: 'حسّن',
-      step4Desc: 'احصل على توصيات وتحكم في استهلاكك.',
+      title: 'من فاتورتك الورقية إلى هاتفك، في أربع خطوات.',
+      steps: [
+        {
+          title: 'تسجّل',
+          body: 'رقم هاتف ورمز يصلك برسالة. تُسمّي منزلك وتُدخل رقم عدّادك.',
+        },
+        {
+          title: 'تُدخل البيانات',
+          body: 'صوّر فاتورة، أو أدخل قراءة. ومع الوحدة يصل القياس وحده، كل ثانية ولكل دائرة.',
+        },
+        {
+          title: 'تفهم',
+          body: 'شريحتك، وما بقي قبل التالية، وتقدير فصلك مفصّلًا بندًا بندًا.',
+        },
+        {
+          title: 'تتحكّم',
+          body: 'ادفع على بوّابة سونلغاز دون الخروج من التطبيق. ومع الوحدة، اقطع دائرة ثانوية من هاتفك.',
+        },
+      ],
     },
-    smart: {
-      eyebrow: 'تحكم ذكي',
-      titleLine1: 'لا تكتفِ بمراقبة',
-      titleLine2: 'طاقتك. تحكم بها.',
-      desc: 'أدر أجهزتك المتصلة وأعطِ الأولوية للمعدات الأكثر أهمية.',
-      tabEssential: 'أساسية',
-      tabSecondary: 'ثانوية',
-      deviceFridge: 'الثلاجة',
-      deviceLights: 'الإضاءة',
-      deviceSecurity: 'الأمن',
-      deviceEssentialEquip: 'المعدات الأساسية',
-      deviceAc: 'مكيف الصالون',
-      deviceWaterHeater: 'سخان الماء',
-      solarTitle: 'طاقة شمسية نهارًا، وشبكة ليلاً.',
-      solarDesc: 'تعمل تاقا تلقائيًا على تحسين مصادر طاقتك حسب احتياجاتك.',
+
+    features: {
+      eyebrow: 'ما تحصل عليه',
+      title: 'ستّة أمور لن تخبرك بها فاتورتك أبدًا.',
+      items: [
+        {
+          title: 'فاتورتك، مصوَّرة',
+          body: 'تستخرج القراءة الآلية الحقول وتصحّحها أنت قبل الحفظ. والتكرار يُنبّهك، ولا يمنعك.',
+        },
+        {
+          title: 'الدفع دون البحث عن البوّابة',
+          body: 'يفتح التطبيق بوّابة الدفع الخاصة بسونلغاز ويملأ رقم الفاتورة والمبلغ والمفتاح عنك. ولا يُعرض زر دفع على فاتورة مسدَّدة.',
+        },
+        {
+          title: 'موقعك بين الشرائح',
+          body: 'الشرائح الأربع وأسعارها، وموقعك، وما بقي من كيلوواط‑ساعة قبل الدرجة التالية.',
+        },
+        {
+          title: 'جهازًا بجهاز',
+          body: 'يوم أو أسبوع أو شهر أو فصل. منحنى الفترة مقارنًا بالفترة السابقة، وحصّة كل جهاز منه.',
+        },
+        {
+          title: 'الأساسي يبقى محميًّا',
+          body: 'الثلاجة والمجمِّدة ومضخّة الماء: مصنّفة P1‎ وبلا مفتاح في التطبيق. ولا يُقطع إلا ما صُنّف P2‎.',
+        },
+        {
+          title: 'منزلك، بالمشاركة',
+          body: 'منازل متعدّدة في حساب واحد، ومشاركة المنزل مع عائلتك كمالك أو مشرف أو مُشاهد.',
+        },
+      ],
     },
-    ai: {
-      eyebrow: 'الذكاء الاصطناعي',
-      title: 'تاقا تتعلم عاداتك.',
-      desc: 'عاداتك تتغير مع الوقت. تحلل تاقا استهلاكك لاكتشاف الخلل، وتحديد الهدر، واقتراح إجراءات مناسبة.',
-      card1Title: 'الكشف',
-      card1Desc: 'حالات شاذة واستهلاك غير معتاد.',
-      card2Title: 'التنبؤ',
-      card2Desc: 'تقدير استهلاكك.',
-      card3Title: 'التوصية',
-      card3Desc: 'إجراءات ملموسة لتوفير المال.',
+
+    dashboard: {
+      eyebrow: 'بوّابة المشغّل',
+      title: 'غرفة التحكّم، على شاشة واحدة.',
+      lead: 'البوّابة التي تراها فرق سونلغاز: خريطة الشبكة حسب الولاية، وصندوق بلاغات السكان، ومحرّر التنبيهات العامة، وسجل التدقيق. أربعة أدوار، ونطاق جغرافي لكل حساب.',
+      bullets: [
+        'خريطة الشبكة، ولايةً بولاية',
+        'البلاغات: استلام، تصنيف، إحالة، حلّ',
+        'تنبيهات عامة مع معاينة المستلمين',
+        'سجل تدقيق خلف كل عملية كتابة',
+      ],
+      alt: 'بوّابة مشغّل طاقة كونترول: نظرة عامة على الشبكة، وخريطة حسب الولاية، ومنحنيات الحمل',
+      hint: 'حرّك المؤشّر لإمالة الشاشة',
+      caption:
+        'صورة من البوّابة. مؤشّرات الحمل المعروضة هنا توضيحية: نطاق الشبكة مُصمَّم ولم يُربط بعد (انظر خارطة الطريق).',
     },
-    algeriaCard: {
-      title: 'مصممة من أجل الجزائر',
-      points: [
-        'بيانات مستضافة محليًا',
-        'تعمل حتى مع اتصال محدود',
-        'مكيّفة مع واقعنا الطاقوي',
+
+    devices: {
+      eyebrow: 'التحكّم',
+      title: 'ما يمكنك قطعه — وما لا يمكنك.',
+      support: 'أطفئ ما نسيته، أينما كنت.',
+      remote: 'يُدار عن بُعد',
+      essentialTitle: 'الأجهزة الأساسية',
+      essentialNote: 'محميّة: لا تُقطع من التطبيق.',
+      secondaryTitle: 'الأجهزة غير الأساسية',
+      secondaryNote: 'القرار لك، من أي مكان.',
+      locked: 'مقفل',
+      essentials: [
+        { name: 'الثلاجة', room: 'المطبخ', icon: 'fridge', watts: 120, dzd: 9 },
+        { name: 'المُجمِّدة', room: 'المطبخ', icon: 'freezer', watts: 95, dzd: 7 },
+        { name: 'مضخّة الماء', room: 'الخارج', icon: 'waterPump', watts: 0, dzd: 3 },
+        { name: 'الإنارة الداخلية', room: 'الصالون', icon: 'lighting', watts: 40, dzd: 2 },
+      ],
+      secondary: [
+        { name: 'المكيّف', room: 'الصالون', icon: 'ac', watts: 1450, dzd: 34 },
+        { name: 'الفرن', room: 'المطبخ', icon: 'oven', watts: 2200, dzd: 21 },
+        { name: 'سخّان الماء', room: 'الحمّام', icon: 'waterHeater', watts: 1800, dzd: 18 },
+      ],
+      total: 'المجموع المباشر',
+      on: 'مُشغَّل',
+      off: 'مُطفأ',
+      toggleLabel: 'تشغيل أو إطفاء {name}',
+      extras: [
+        { title: 'وضع الغياب', body: 'يقترحه التطبيق عندما يبدو المنزل فارغًا، ويُعلمك عند انتهاء الجلسة.' },
+        { title: 'الجدولة', body: 'فترات تشغيل وإطفاء متكرّرة، تُضبط بلمسة إصبع.' },
+        { title: 'تخفيف أحمال المنزل', body: 'تختار أي دائرة تتراجع أولًا عند بلوغ سقف الميزانية.' },
+      ],
+      limit:
+        'يعمل المُرحّل على الدوائر الثانوية المؤهّلة في وحدة مقترنة. ولا يمكنه قطع تغذيتك من سونلغاز، وما صُنّف P1‎ لا يمكن قطعه من التطبيق إطلاقًا.',
+    },
+
+    loop: {
+      eyebrow: 'الإبلاغ',
+      title: 'بلاغك يصل إلى شخص فعلًا.',
+      lead: 'تأخذ صورة وترسلها. يدخل البلاغ إلى صندوق المشغّلين الذين يغطّون ولايتك، ويعود إليك كل تغيّر في حالته.',
+      steps: [
+        { title: 'تُبلّغ', body: 'بالصور، من لوحة التحكّم.' },
+        { title: 'يستلم المشغّل', body: 'ثم يصنّف البلاغ ويُحيله.' },
+        { title: 'يُوفد عامل ميداني', body: 'يُعرض أمر عمل، ويُقبل، ويُتابَع.' },
+        { title: 'تبقى على علم', body: 'تتغيّر الحالة عندك حين تتغيّر عندهم.' },
+      ],
+    },
+
+    providers: {
+      eyebrow: 'لمزوّدي الطاقة',
+      title: 'بوّابة المشغّل، من الولاية إلى العدّاد.',
+      lead: 'أربعة أدوار، ونطاق جغرافي لكل حساب، وسجل تدقيق خلف كل عملية كتابة. ويطابق الخادم هذا النطاق مع كل طلب.',
+      items: [
+        {
+          title: 'خريطة الشبكة',
+          body: 'مجاميع حسب الولاية، ثم منازل ولاية واحدة، ثم منزل واحد. والمجاميع لا تحمل أي إحداثيات، في أي مستوى تكبير.',
+        },
+        {
+          title: 'البلاغات والعمل الميداني',
+          body: 'صندوق بلاغات السكان، ومراحل الاستلام ← التصنيف ← الإحالة ← الحل، ولوحة توزيع العاملين بجانبها.',
+        },
+        {
+          title: 'التنبيهات العامة',
+          body: 'محرّر بنصّ فرنسي وعربي، واستهداف جغرافي، ومعاينة لعدد المستلمين قبل النشر.',
+        },
+        {
+          title: 'إصدار الفواتير',
+          body: 'من بطاقة المنزل، بعد أن يتّضح أيّ منزل هو المعني. ويُرفض رقم الفاتورة نفسه إذا تكرّر على المنزل نفسه.',
+        },
+      ],
+      alarms: {
+        title: 'تمييزان لا يختلطان أبدًا',
+        items: [
+          {
+            title: 'لتيار التسرّب مستواه الخاص',
+            body: 'فوق مستوى «الخطر». تيارٌ يجد طريقه عبر السباكة أو حائط رطب أو عبر إنسان ليس خطرًا على المعدّات. خطر المعدّات يُرسل فرقة بالوتيرة المعتادة، أمّا هذا فيُرسلها الآن.',
+          },
+          {
+            title: 'قاطع المنزل ليس انقطاعًا في الشبكة',
+            body: 'فتح القاطع يعني أن حماية المنزل نفسها عملت وأن الفرقة يجب أن تتوجّه إلى البيت. أما الانقطاع فيعني أن التغذية مفقودة من الأعلى وأن الفرقة يجب أن تتوجّه إلى المحوّلة. وخلطهما يُرسل الفرقة إلى المكان الخطأ.',
+          },
+        ],
+      },
+      stat: {
+        value: '٢١٨٢٨',
+        unit: 'ميغاواط',
+        label: 'الذروة الوطنية، صيف ٢٠٢٦ — الرقم القياسي الخامس في الموسم (سونلغاز)',
+      },
+      roadmap:
+        'خارطة الطريق: تحليلات الذروة وتخفيف الأحمال وتقارير الأثر البيئي مُصمّمة ومُنمذجة، دون خدمة خلفية حتى الآن.',
+      cta: 'اطلب عرضًا للبوّابة',
+    },
+
+    trust: {
+      eyebrow: 'الثقة',
+      triad: ['بسيط', 'آمن', 'جزائري'],
+      title: 'ما نرفض أن نزعمه.',
+      items: [
+        {
+          title: 'التقدير يبقى تقديرًا',
+          body: 'مجموع فصلك يُوصَف بأنه تقدير في كل موضع يظهر فيه، ولا يُقدَّم أبدًا كمبلغ أقرّته سونلغاز.',
+        },
+        {
+          title: 'الصورة ليست دَينًا',
+          body: 'ما ظنّت الكاميرا أنها قرأته وما أصدرته سونلغاز لا يتشابهان على الشاشة. الأول ادّعاء أضعف، ويُرسم على هذا الأساس.',
+        },
+        {
+          title: 'خارج نطاقك: لا شيء',
+          body: 'طلب ولاية خارج نطاقك لا يُرجع شيئًا، لا خطأً — لأن التمييز بينهما يؤكّد لمن لا يحقّ له الاطّلاع أن تلك الجهة تحتوي بيانات.',
+        },
+        {
+          title: '«أُرسل» ليس «وصل»',
+          body: 'يُسجَّل الإشعار كمحاولة إرسال، لا كإشعار وصل. وهما ادّعاءان مختلفان، وبنية البيانات تفصل بينهما.',
+        },
+      ],
+      extra: [
+        'بياناتك تبقى في الجزائر ولا تُشارَك دون موافقتك.',
+        'ثلاث لغات، مع انعكاس كامل في العربية. ويبقى رقم العدّاد مقروءًا من اليسار إلى اليمين.',
+        'إمكانية وصول بمعيار WCAG AA‎: لا تُميَّز الحالات باللون وحده أبدًا.',
         'الكهرباء اليوم. الماء والغاز غدًا.',
       ],
     },
-    about: {
-      eyebrow: 'حول',
-      title: 'منصة تحليلية وطنية لإحصائيات الطاقة',
-      lead: [
-        { text: 'تعتمد تاقا كنترول على ' },
-        { text: 'منصة وطنية لتحليل بيانات', strong: true },
-        { text: ' الاستهلاك، تعمل على مركزة وتثمين المعلومات ' },
-        { text: 'الطاقوية', strong: true },
-        { text: ' على مستوى البلاد، لرؤية شاملة وموثوقة وفي الوقت الفعلي.' },
-      ],
-      dashboardPreview: 'معاينة لوحة تحكم تاقا كنترول',
-      pillars: [
-        {
-          title: 'بيانات مركزية',
-          description: 'مصدر واحد لجميع بيانات الطاقة في البلاد.',
-        },
-        {
-          title: 'تغطية وطنية',
-          description: 'تحليل حسب الجهة والولاية وقطاع النشاط.',
-        },
-        {
-          title: 'موثوقية المؤشرات',
-          description: 'بيانات دقيقة ومعتمدة لاتخاذ قرارات أفضل.',
-        },
-        {
-          title: 'متابعة في الوقت الفعلي',
-          description: 'لوحات قيادة ديناميكية ومحدّثة باستمرار.',
-        },
-      ],
-    },
-    scale: {
-      eyebrow: 'رؤيتنا',
-      titleLine1: 'من منزل',
-      titleLine2: 'إلى رؤية وطنية',
-      nodeHome: 'منزل',
-      nodeBuilding: 'عمارة',
-      nodeCompany: 'شركة',
-      nodeCity: 'مدينة',
-      nodeCountry: 'الجزائر',
-    },
+
     faq: {
       eyebrow: 'الأسئلة الشائعة',
       title: 'كل ما تحتاج معرفته قبل البدء',
-      desc: 'اطّلع على إجابات الأسئلة الأكثر تداولًا حول التوافق والأمان وتركيب تاقا.',
+      desc: 'الأجهزة والأمان والدفع: إجابات عن الأسئلة الأكثر تداولًا.',
       items: [
         {
-          q: 'هل أحتاج إلى عداد خاص؟',
-          a: 'تتصل تاقا بمنشأتك الحالية عبر علبة إنترنت الأشياء متوافقة مع جميع العدادات. لا حاجة لاستبدال العداد في معظم الحالات.',
+          q: 'هل أحتاج إلى أجهزة لأبدأ؟',
+          a: 'لا. يكفي هاتف وفاتورتك الورقية: تصوّرها، وتصحّح ما استخرجته القراءة الآلية، ثم تتابع شريحتك وتقدير فصلك. ووحدة القياس تضيف المتابعة اللحظية لكل دائرة والتحكّم عن بُعد — وليست شرطًا للدخول.',
         },
         {
-          q: 'هل هي متوافقة مع تركيبتي الحالية؟',
-          a: 'نعم. تُركَّب تاقا كإضافة إلى لوحتك الكهربائية، دون تعديلات كبيرة على الدوائر الحالية.',
+          q: 'هل أحتاج إلى عدّاد خاص؟',
+          a: 'لا. تُركَّب الوحدة إلى جانب تركيبتك الحالية، عبر وحدة قياس متوافقة مع عدّادات سونلغاز المعتادة. وفي الغالبية الكبرى من الحالات لا حاجة إلى استبدال العدّاد.',
+        },
+        {
+          q: 'كيف تعرفون شريحتي عند سونلغاز؟',
+          a: 'يجمع طاقة كونترول استهلاكك من بداية فصل الفوترة — من قراءاتك أو من قياس الوحدة — ويطبّق تسعيرة المنازل السارية بشرائحها الأربع التصاعدية. فترى موقعك بدقّة وما بقي من كيلوواط‑ساعة قبل الشريحة التالية.',
+        },
+        {
+          q: 'هل يمكنني دفع فاتورتي من التطبيق؟',
+          a: `نعم. يفتح التطبيق بوّابة الدفع الخاصة بسونلغاز (‎${EPAYMENT_HOST}‎) ويملأ رقم الفاتورة والمبلغ والمفتاح من الفاتورة المحفوظة. ويجري الدفع على بوّابة سونلغاز، لا عندنا.`,
+        },
+        {
+          q: 'هل يمكن لطاقة كونترول قطع الكهرباء عنّي؟',
+          a: 'لا. يعمل المُرحّل على الدوائر الثانوية المؤهّلة في وحدة مقترنة — سخّان ماء أو مكيّف. ولا يمكنه قطع تغذيتك من سونلغاز، والدوائر التي تصنّفها حسّاسة لا يمكن قطعها من التطبيق إطلاقًا. هذا قيد في التصميم، لا سهو.',
         },
         {
           q: 'هل بياناتي آمنة؟',
-          a: 'تبقى بيانات استهلاكك تحت تحكمك وتُستضاف محليًا. ولا تتم مشاركتها أبدًا دون موافقتك.',
+          a: 'تُستضاف بياناتك في الجزائر ولا تُشارَك أبدًا دون موافقتك الصريحة. وتُحدَّد صلاحيات المُشاهد من عضويّاته في المنزل، لا من صلاحية عامة في حسابه. ويمكنك تصدير بياناتك أو طلب حذفها في أي وقت.',
         },
         {
-          q: 'هل يعمل التطبيق بدون اتصال مستقر؟',
-          a: 'صُممت تاقا لتكون مرنة: تُخزَّن البيانات محليًا مؤقتًا وتتم مزامنتها فور عودة الاتصال.',
+          q: 'هل يعمل التطبيق دون اتصال مستقر؟',
+          a: 'يبقى الملف الشخصي والمنزل الذي فتحته سابقًا معروضين دون اتصال. ومع الوحدة يتواصل القياس ويُرفع عند عودة الشبكة. أما أول تشغيل دون اتصال فلا شيء لديه ليعرضه، ويقول ذلك صراحةً.',
         },
         {
-          q: 'هل يمكن لتاقا قطع أجهزتي من تلقاء نفسها؟',
-          a: 'لا. يوصي الذكاء الاصطناعي بإجراءات، لكنه لا يقطع أبدًا دائرة حساسة دون موافقتك. تبقى دائمًا صاحب القرار.',
+          q: 'هل يمكنني إدارة منازل متعدّدة؟',
+          a: 'نعم. يمكن للحساب الواحد أن يحمل منازل متعدّدة، لكل منها عرضه وأجهزته ودورك فيه. ويُشارَك المنزل مع عائلتك كمالك أو مشرف أو مُشاهد، بدعوات محدّدة المدّة.',
         },
       ],
     },
+
     finalCta: {
-      title: 'طاقة الغد تبدأ بفهم أفضل لطاقة اليوم.',
-      button: 'اكتشف تاقا',
+      title: 'فاتورتك القادمة تُكتب الآن. ابدأ بقراءتها.',
+      sub: 'ابدأ بفاتورتك الورقية اليوم. والوحدة تأتي وقت ما تشاء.',
+      button: 'ابدأ المتابعة',
+      secondary: 'لمزوّدي الطاقة',
     },
+
     footer: {
-      copyright: '© 2026 تاقا — جميع الحقوق محفوظة.',
-      tagline: 'طاقة أكثر ذكاءً من أجل مستقبل أكثر استدامة.',
-      terms: 'شروط الاستخدام',
-      privacy: 'سياسة الخصوصية',
-      devBy: 'طوّرته',
+      tagline: 'الرؤية قبل الفاتورة.',
+      rights: 'جميع الحقوق محفوظة.',
+      devBy: 'من تطوير',
+      language: 'اللغة',
+      backToTop: 'إلى الأعلى',
+    },
+
+    alt: {
+      logo: 'طاقة كونترول',
+      heroPhone: 'تطبيق طاقة كونترول يعرض الاستهلاك اللحظي لكل دائرة',
+      dashboardScreen: 'لوحة تحكّم طاقة كونترول: الاستهلاك حسب الدائرة وحسب شريحة سونلغاز',
+      bill: 'فاتورة كهرباء تصل في نهاية الفصل',
+      scan: 'فاتورة ورقية مصوَّرة داخل التطبيق',
+      anomaly: 'تنبيه يرصد استهلاكًا غير طبيعي في إحدى الدوائر',
+      budgetAlert: 'إشعار بتجاوز الميزانية الشهرية',
+      peak: 'رسم بياني يُظهر ذروة استهلاك',
+      realtime: 'منحنى استهلاك لحظي',
+      remote: 'هاتف يقطع دائرة عن بُعد',
+      switch: 'مفتاح متصل يتحكّم في دائرة',
+      co2: 'بصمة كربونية بالكيلوغرام من ثاني أكسيد الكربون',
+      map: 'خريطة الشبكة حسب الولاية',
+    },
+
+    a11y: {
+      icon3dLabel: 'رسم متحرّك: {name}',
+      chartLabel: 'رسم بياني: {name}',
+      reducedMotion: 'حركة مخفّفة',
     },
   },
 };
 
 export const LANGUAGES = [
-  { code: 'fr', label: 'Français', short: 'FR' },
-  { code: 'en', label: 'English', short: 'EN' },
-  { code: 'ar', label: 'العربية', short: 'AR' },
+  { code: 'fr', label: 'Français', short: 'FR', dir: 'ltr' },
+  { code: 'en', label: 'English', short: 'EN', dir: 'ltr' },
+  { code: 'ar', label: 'العربية', short: 'AR', dir: 'rtl' },
 ];
+
+export const DEFAULT_LANG = 'fr';
+export const RTL_LANGS = ['ar'];

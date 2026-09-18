@@ -1,0 +1,415 @@
+.hero {
+  position: relative;
+  background: var(--dark);
+  padding-block-start: 40px;
+  padding-block-end: var(--s9);
+  margin-block-start: -84px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(6, 37, 27, 0.95) 0%,
+      rgba(6, 37, 27, 0.8) 44%,
+      rgba(6, 37, 27, 0.3) 76%,
+      rgba(6, 37, 27, 0.6) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(6, 37, 27, 0.82) 0%,
+      rgba(6, 37, 27, 0.14) 30%,
+      rgba(6, 37, 27, 0.35) 70%,
+      rgba(6, 37, 27, 0.96) 100%
+    ),
+    url('/ChatGPT%20Image%20Sep%2010,%202026,%2001_39_31%20PM.webp');
+  background-position: center right;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-block-end: 1px solid var(--border-dark);
+}
+
+/* In RTL the photographic subject should sit on the other side, so the copy
+   still lands over the darkest part of the image. */
+[dir='rtl'] .hero-bg {
+  background-position: center left;
+  transform: scaleX(-1);
+}
+
+/* faint conductor grid — a nod to the circuit language used in the footer */
+.hero-grid-glow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(105, 230, 176, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(105, 230, 176, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.9), transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, rgba(0, 0, 0, 0.9), transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  column-gap: var(--s7);
+  align-items: center;
+  padding-block-start: var(--s9);
+}
+
+.hero-text {
+  max-width: 660px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-block-end: var(--s3);
+}
+
+html[lang='ar'] .hero-eyebrow {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 15px;
+}
+
+/* ── H1 ────────────────────────────────────────────────────────────────── */
+.hero-headline {
+  font-size: var(--fs-h1);
+  line-height: 1.04;
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+
+html[lang='ar'] .hero-headline {
+  line-height: 1.34;
+  letter-spacing: 0;
+}
+
+/* Each word is masked so it can rise out of nothing rather than fade in place */
+.hero-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-block-end: 0.08em;
+  margin-block-end: -0.08em;
+}
+
+.hero-word {
+  display: inline-block;
+  transform-origin: bottom center;
+  will-change: transform, opacity;
+}
+
+.hero-word.accent {
+  color: var(--green);
+}
+
+.hero-sub {
+  margin-block-start: var(--s4);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--muted-on-dark);
+  max-width: 56ch;
+}
+
+/* ── proof points ──────────────────────────────────────────────────────── */
+.hero-proof {
+  margin-block-start: var(--s5);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px var(--s4);
+  max-width: 620px;
+}
+
+.hero-proof-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.35;
+}
+
+.hero-proof-icon {
+  flex-shrink: 0;
+}
+
+.hero-ctas {
+  margin-block-start: var(--s6);
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── the bill meter ────────────────────────────────────────────────────── */
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 520px;
+}
+
+.bill-meter {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.bill-meter-glow {
+  position: absolute;
+  inset: -18% -12%;
+  background: radial-gradient(circle at 60% 40%, rgba(105, 230, 176, 0.3), transparent 68%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.bill-meter-card {
+  position: relative;
+  padding: var(--s4);
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(19, 51, 38, 0.94) 0%, rgba(6, 28, 20, 0.92) 100%);
+  border: 1px solid rgba(105, 230, 176, 0.3);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(105, 230, 176, 0.1);
+  color: var(--white);
+}
+
+.bm-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+
+.bm-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--faint-on-dark);
+  letter-spacing: 0.04em;
+}
+
+.bm-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(105, 230, 176, 0.12);
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.bm-live.is-caught {
+  color: var(--gold);
+  background: rgba(232, 195, 122, 0.14);
+}
+
+.bm-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: bmPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes bmPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+.bm-readout {
+  margin-block-start: var(--s3);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.bm-value {
+  font-size: clamp(2.6rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  color: var(--white);
+}
+
+.bm-unit {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.bm-cost {
+  margin-block-start: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bm-cost strong {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.bm-cost span {
+  font-size: 13px;
+  color: var(--faint-on-dark);
+}
+
+/* ── tranche ladder ───────────────────────────────────────────────────── */
+.bm-tranches {
+  margin-block-start: var(--s4);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.bm-tranche-bar {
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.bm-tranche-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--green);
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+.bm-tranche.is-current .bm-tranche-fill {
+  background: linear-gradient(90deg, var(--green), var(--gold));
+}
+
+.bm-tranche-label {
+  display: block;
+  margin-block-start: 7px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bm-tranche.is-current .bm-tranche-label {
+  color: var(--gold);
+}
+
+.bm-tranche.is-done .bm-tranche-label {
+  color: rgba(105, 230, 176, 0.7);
+}
+
+/* ── the alert that catches the climb ─────────────────────────────────── */
+.bm-alert {
+  margin-block-start: var(--s3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(232, 195, 122, 0.12);
+  border: 1px solid rgba(232, 195, 122, 0.4);
+}
+
+.bm-alert-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bm-alert-text strong {
+  font-size: 13.5px;
+  color: var(--gold);
+}
+
+.bm-alert-text span {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.4;
+}
+
+/* ── responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    row-gap: var(--s7);
+    padding-block-start: var(--s8);
+  }
+
+  .hero-visual {
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .bill-meter {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-block-end: var(--s7);
+  }
+
+  .hero-inner {
+    padding-block-start: var(--s7);
+  }
+
+  .hero-proof {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .hero-ctas {
+    /* full-width stacked CTAs — the safest shape at 390px in all 3 languages */
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  .bill-meter-card {
+    padding: var(--s3);
+  }
+
+  .bm-tranche-label {
+    font-size: 9.5px;
+  }
+}
