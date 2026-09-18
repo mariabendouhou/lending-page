@@ -1,0 +1,22 @@
+/**
+ * Stylesheet entry point.
+ *
+ * Replaces the old global.css (2769 lines) + problemSolution.css (1418 lines),
+ * which were written against markup that no longer exists. Rebuilt on logical
+ * properties — margin-inline, inset-inline-start, text-align: start — so RTL
+ * works by default instead of through the seven [dir="rtl"] patches the audit
+ * found (docs/localization-audit.md §11).
+ */
+@import './variables.css';
+@import './base.css';
+@import './theme.css';
+@import './nav.css';
+@import './hero.css';
+@import './phone.css';
+@import './sections.css';
+@import './dashboard.css';
+@import './devices.css';
+@import './modes.css';
+@import './providers.css';
+@import './footer.css';
+@import './icons3d.css';

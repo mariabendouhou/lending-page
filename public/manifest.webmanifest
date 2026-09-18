@@ -1,0 +1,14 @@
+{
+  "name": "TaQa Contrôle",
+  "short_name": "TaQa",
+  "description": "Voyez votre consommation avant la facture.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06251B",
+  "theme_color": "#06251B",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/logo.webp", "sizes": "512x512", "type": "image/webp", "purpose": "any" }
+  ]
+}

@@ -1,190 +1,148 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Linkedin, Twitter, Instagram, Plus, Mail, Phone } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
+import { usePrefersReducedMotion } from '../lib/hooks';
+import { VIEWPORT_EARLY, drawLine } from '../lib/motion';
+import { BRAND } from '../i18n/translations';
+import LanguageSwitcher from './LanguageSwitcher';
+import { Reveal } from './ui/Reveal';
 
+/**
+ * TODO_REPLACE — the SmartTech Innovation website. Listed in the handover
+ * summary; this is the only place the URL appears.
+ */
+export const SMARTTECH_URL = 'TODO_REPLACE';
+
+/** Traces for the animated circuit pattern. Drawn, then quietly pulsing. */
+const TRACES = [
+  'M0 120 H180 V60 H420 V150 H700 V90 H960',
+  'M0 40 H120 V170 H340 V30 H620 V120 H960',
+  'M0 190 H260 V110 H520 V190 H960',
+];
+
+const NODES = [
+  [180, 120],
+  [420, 60],
+  [700, 150],
+  [120, 40],
+  [340, 170],
+  [620, 30],
+  [260, 190],
+  [520, 110],
+];
+
+/**
+ * Footer (brief §3.7).
+ *
+ * Minimal: logo, tagline, language switcher, © year, and the developer credit.
+ * The long contact blocks are gone — and with them the duplicated
+ * desktop/mobile DOM trees and the two dead legal links that pointed at "#".
+ *
+ * The empty background now carries an animated circuit pattern, a soft gradient
+ * glow, and a large faint watermark of the brand name — طاقة in Arabic.
+ */
 export default function Footer() {
-  const { t } = useLanguage();
-  const [openFaq, setOpenFaq] = useState(null);
-  const [visibleFaqs, setVisibleFaqs] = useState(() => new Set());
-  const faqRefs = useRef([]);
-
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.dataset.faqIndex);
-            setVisibleFaqs((prev) => (prev.has(index) ? prev : new Set(prev).add(index)));
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    faqRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  const faqs = t.faq.items;
-
-  const devCredit = (
-    <div className="footer-dev-credit">
-      <span className="footer-dev-label">{t.footer.devBy}</span>
-      <span className="footer-dev-name">SMART TECH INNOVATION</span>
-      <a href="mailto:info@smarttechinnovation.com" className="footer-dev-link">
-        <Mail size={13} />
-        info@smarttechinnovation.com
-      </a>
-      <a href="tel:+213542622874" className="footer-dev-link">
-        <Phone size={13} />
-        +213 542 622 874
-      </a>
-    </div>
-  );
+  const { t, lang, isRtl } = useLanguage();
+  const reduce = usePrefersReducedMotion();
+  const year = new Date().getFullYear();
+  const watermark = lang === 'ar' ? 'طاقة' : 'TaQa';
 
   return (
-    <>
-      {/* FAQ Section */}
-      <section className="faq" id="faq">
-        <div className="wrap faq-inner">
-          <div className="faq-head reveal-left">
-            <div className="eyebrow dark">{t.faq.eyebrow}</div>
-            <h2>{t.faq.title}</h2>
-            <p>
-              {t.faq.desc}
-            </p>
-          </div>
+    <footer className="site-footer section-dark">
+      {/* ── background ─────────────────────────────────────────────────────── */}
+      <div className="footer-glow" aria-hidden="true" />
 
-          <div className="faq-list">
-            {faqs.map((faq, index) => {
-              const isOpen = openFaq === index;
-              const isVisible = visibleFaqs.has(index);
-              return (
-                <div
-                  key={index}
-                  ref={(el) => (faqRefs.current[index] = el)}
-                  data-faq-index={index}
-                  className={`faq-item reveal-scale ${isVisible ? 'is-visible' : ''} ${isOpen ? 'active' : ''}`}
-                  data-delay={`${index * 0.08}s`}
-                >
-                  <button
-                    type="button"
-                    className="faq-q"
-                    onClick={() => toggleFaq(index)}
-                  >
-                    <span>{faq.q}</span>
-                    <span className="plus">+</span>
-                  </button>
-                  <div className="faq-a">
-                    <p>{faq.a}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <div className="footer-circuit" aria-hidden="true">
+        <svg viewBox="0 0 960 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="fc-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#69E6B0" stopOpacity="0.05" />
+              <stop offset="50%" stopColor="#69E6B0" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#69E6B0" stopOpacity="0.05" />
+            </linearGradient>
+          </defs>
 
-      {/* Final CTA Banner */}
-      <section className="final-cta" id="final">
-        <div className="final-bg"></div>
-        <div className="wrap final-inner reveal-scale">
-          <h2>
-            {t.finalCta.title}
-          </h2>
-          <a href="#hero" className="btn btn-primary">
-            {t.finalCta.button} <ArrowRight size={18} className="btn-arrow" />
+          {TRACES.map((d, i) => (
+            <motion.path
+              key={d}
+              d={d}
+              fill="none"
+              stroke="url(#fc-grad)"
+              strokeWidth="1.4"
+              strokeLinejoin="round"
+              variants={drawLine({ reduce, duration: 2.4, delay: i * 0.25 })}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VIEWPORT_EARLY}
+            />
+          ))}
+
+          {NODES.map(([cx, cy], i) =>
+            reduce ? (
+              <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.5" fill="#69E6B0" fillOpacity="0.35" />
+            ) : (
+              <motion.circle
+                key={`${cx}-${cy}`}
+                cx={cx}
+                cy={cy}
+                r="2.5"
+                fill="#69E6B0"
+                animate={{ opacity: [0.18, 0.75, 0.18], scale: [1, 1.5, 1] }}
+                transition={{
+                  duration: 3.2,
+                  repeat: Infinity,
+                  delay: i * 0.35,
+                  ease: 'easeInOut',
+                }}
+                style={{ transformOrigin: `${cx}px ${cy}px` }}
+              />
+            )
+          )}
+        </svg>
+      </div>
+
+      <span className="footer-watermark" aria-hidden="true">
+        {watermark}
+      </span>
+
+      {/* ── content ────────────────────────────────────────────────────────── */}
+      <div className="wrap footer-inner">
+        <Reveal className="footer-brand">
+          <a href="#hero" className="logo" aria-label={t.alt.logo}>
+            <img
+              src="/logo-brand.webp"
+              alt={t.alt.logo}
+              className="logo-img"
+              width="132"
+              height="32"
+              onError={(e) => {
+                e.currentTarget.src = '/logo.webp';
+              }}
+            />
           </a>
-        </div>
-      </section>
+          <p className="footer-tagline">{t.footer.tagline}</p>
+        </Reveal>
 
-      {/* Footer */}
-      <footer>
-        <div className="wrap">
-          {/* Desktop / tablet layout */}
-          <div className="footer-top footer-top-desktop">
-            <a href="#hero" className="logo">
-              <img
-                src="/logo-brand.webp"
-                alt="TAQA Contrôle"
-                className="logo-img"
-                onError={(e) => { e.currentTarget.src = '/logo.webp'; }}
-              />
-            </a>
-            <nav className="footer-links">
-              <a href="#hero">{t.nav.home}</a>
-              <a href="#solution">{t.nav.product}</a>
-              <a href="#how">{t.nav.how}</a>
-              <a href="#smart">{t.nav.intelligence}</a>
-              <a href="#algeria">{t.nav.about}</a>
-              <a href="#faq">{t.nav.faq}</a>
-            </nav>
-            <div className="footer-social">
-              <a href="https://www.linkedin.com/company/smart-tech-innovation-software-development" aria-label="LinkedIn">
-                <Linkedin size={16} />
-              </a>
-              <a href="https://x.com/Smarttechinnov" aria-label="X">
-                <Twitter size={16} />
-              </a>
-              <a href="https://www.instagram.com/smart.tech.innovation/" aria-label="Instagram">
-                <Instagram size={16} />
-              </a>
-            </div>
-          </div>
-          <div className="footer-bottom footer-bottom-desktop">
-            {t.footer.copyright}
-            {devCredit}
-          </div>
+        <Reveal className="footer-side" delay={0.08}>
+          <LanguageSwitcher variant="footer" />
+          <a href="#hero" className="footer-top-link">
+            {t.footer.backToTop}
+            <span aria-hidden="true">{isRtl ? '↑' : '↑'}</span>
+          </a>
+        </Reveal>
+      </div>
 
-          {/* Mobile layout */}
-          <div className="footer-mobile">
-            <a href="#hero" className="logo">
-              <img
-                src="/logo-brand.webp"
-                alt="TAQA Contrôle"
-                className="logo-img"
-                onError={(e) => { e.currentTarget.src = '/logo.webp'; }}
-              />
-            </a>
-            <p className="footer-tagline">{t.footer.tagline}</p>
-            <div className="footer-social">
-              <a href="https://www.linkedin.com/company/smart-tech-innovation-software-development" aria-label="LinkedIn">
-                <Linkedin size={16} />
-              </a>
-              <a href="https://x.com/Smarttechinnov" aria-label="X">
-                <Twitter size={16} />
-              </a>
-              <a href="https://www.instagram.com/smart.tech.innovation/" aria-label="Instagram">
-                <Instagram size={16} />
-              </a>
-            </div>
-            <nav className="footer-links footer-links-mobile">
-              <a href="#hero">{t.nav.home}</a>
-              <a href="#how">{t.nav.how}</a>
-              <a href="#solution">{t.nav.product}</a>
-              <a href="#algeria">{t.nav.about}</a>
-              <a href="#smart">{t.nav.intelligence}</a>
-              <a href="#faq">{t.nav.faq}</a>
-            </nav>
-            <a href="#hero" className="btn btn-primary footer-cta-mobile">
-              {t.hero.ctaPrimary} <span className="btn-arrow">→</span>
-            </a>
-            <div className="footer-bottom-mobile">
-              <div className="footer-bottom">{t.footer.copyright}</div>
-              {devCredit}
-              <div className="footer-legal">
-                <a href="#">{t.footer.terms}</a>
-                <a href="#">{t.footer.privacy}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </>
+      <div className="wrap footer-bottom">
+        <p className="footer-copy">
+          © {year} {BRAND[lang] || BRAND.fr} — {t.footer.rights}
+        </p>
+        <p className="footer-dev">
+          {t.footer.devBy}{' '}
+          <a href={SMARTTECH_URL} target="_blank" rel="noopener noreferrer">
+            <strong>SmartTech Innovation</strong>
+          </a>
+        </p>
+      </div>
+    </footer>
   );
 }

@@ -1,0 +1,165 @@
+.providers-section {
+  position: relative;
+  padding-block: var(--s10);
+  background: linear-gradient(to bottom, var(--dark) 0%, #08291E 100%);
+  overflow: hidden;
+}
+
+.providers-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(105, 230, 176, 0.14), transparent 55%),
+    radial-gradient(circle at 20% 85%, rgba(232, 195, 122, 0.08), transparent 50%);
+  pointer-events: none;
+}
+
+.providers-section .wrap {
+  position: relative;
+}
+
+/* ── home → grid chain ───────────────────────────────────────────────── */
+.scale-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-block-end: var(--s7);
+  padding: var(--s3);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.scale-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.scale-node:hover {
+  border-color: rgba(105, 230, 176, 0.45);
+  background: rgba(105, 230, 176, 0.08);
+}
+
+.scale-node.is-final {
+  background: linear-gradient(145deg, rgba(105, 230, 176, 0.2), rgba(105, 230, 176, 0.06));
+  border-color: rgba(105, 230, 176, 0.5);
+  box-shadow: 0 0 26px rgba(105, 230, 176, 0.22);
+}
+
+.scale-link {
+  color: rgba(105, 230, 176, 0.55);
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* ── capability cards ────────────────────────────────────────────────── */
+.providers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s3);
+}
+
+.provider-card {
+  padding: var(--s4);
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.provider-card h3 {
+  font-size: var(--fs-h3);
+  margin-block-start: var(--s1);
+}
+
+.provider-card p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* ── the national peak stat ──────────────────────────────────────────── */
+.providers-stat {
+  margin-block-start: var(--s6);
+  padding: var(--s6) var(--s4);
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(105, 230, 176, 0.3);
+  background: rgba(105, 230, 176, 0.06);
+  text-align: center;
+}
+
+.providers-stat-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--green);
+}
+
+.providers-stat-unit {
+  font-size: 0.34em;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--green-soft);
+}
+
+.providers-stat p {
+  margin-block: var(--s2) var(--s4);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 54ch;
+  margin-inline: auto;
+}
+
+@media (max-width: 860px) {
+  .providers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scale-node {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .providers-section {
+    padding-block: var(--s8);
+  }
+
+  .scale-chain {
+    gap: 6px;
+    padding: var(--s2);
+  }
+
+  .scale-node {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+
+  .scale-link {
+    font-size: 13px;
+  }
+
+  .providers-stat {
+    padding: var(--s4) var(--s3);
+  }
+}

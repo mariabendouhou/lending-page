@@ -1,0 +1,223 @@
+.nav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  padding-block: 20px;
+}
+
+.nav-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 37, 27, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-block-end: 1px solid var(--border-dark);
+  pointer-events: none;
+}
+
+.nav-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.logo:hover .logo-img {
+  transform: scale(1.04);
+}
+
+.nav-links {
+  position: relative;
+  display: flex;
+  gap: 32px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.nav-links a {
+  position: relative;
+  padding-block: 4px;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.is-active {
+  color: var(--white);
+}
+
+.nav-indicator {
+  position: absolute;
+  inset-block-end: -4px;
+  inset-inline-start: 0;
+  height: 2.5px;
+  background: var(--green);
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(105, 230, 176, 0.65);
+  pointer-events: none;
+  /* animated via transform, never left/width */
+  will-change: transform, width;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.nav-burger {
+  display: none;
+  color: var(--white);
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border-dark);
+}
+
+/* ── language switcher ─────────────────────────────────────────────────── */
+.lang-switcher {
+  position: relative;
+}
+
+.lang-switcher-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-dark);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.lang-switcher-btn:hover {
+  border-color: var(--green);
+  background: rgba(105, 230, 176, 0.1);
+}
+
+.lang-chevron {
+  transition: transform 0.25s var(--ease-out);
+}
+
+.lang-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.lang-menu {
+  position: absolute;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-end: 0;
+  min-width: 152px;
+  padding: 6px;
+  background: var(--dark-2);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  z-index: 60;
+}
+
+.lang-menu-item {
+  display: block;
+  width: 100%;
+  text-align: start;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.lang-menu-item:hover {
+  background: rgba(105, 230, 176, 0.12);
+  color: var(--white);
+}
+
+.lang-menu-item.is-active {
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* footer variant sits on a dark panel too, just smaller */
+.lang-switcher-footer .lang-switcher-btn {
+  padding: 8px 12px;
+}
+
+.lang-switcher-footer .lang-menu {
+  inset-block-start: auto;
+  inset-block-end: calc(100% + 8px);
+}
+
+/* ── mobile ────────────────────────────────────────────────────────────── */
+.nav-mobile {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  .nav-links {
+    gap: 22px;
+    font-size: 14px;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-burger {
+    display: inline-flex;
+  }
+
+  .nav-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    inset-inline: 16px;
+    inset-block-start: calc(100% + 6px);
+    padding: 14px;
+    background: var(--dark-2);
+    border: 1px solid var(--border-dark);
+    border-radius: 18px;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-mobile a {
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 15px;
+  }
+
+  .nav-mobile a:hover {
+    background: rgba(105, 230, 176, 0.1);
+    color: var(--white);
+  }
+
+  .nav-mobile .btn {
+    margin-block-start: 8px;
+    justify-content: center;
+    color: var(--dark);
+  }
+}

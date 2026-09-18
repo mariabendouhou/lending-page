@@ -1,102 +1,159 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
+import { usePrefersReducedMotion } from '../lib/hooks';
+import { EASE_OUT, fadeUp, stagger, wordReveal } from '../lib/motion';
+import { Icon3D } from './icons3d';
+import MagneticButton from './ui/MagneticButton';
+import PhoneShowcase from './PhoneShowcase';
 
+const PROOF_ICONS = ['realtime', 'tranche', 'budget', 'circuit'];
+
+/**
+ * Hero: eyebrow → H1 → subheadline → 4 proof points → 2 CTAs.
+ *
+ * The H1 is the largest text on the page and reveals word by word. The accent
+ * clause (t.hero.h1Accent) is found inside the sentence rather than stored as a
+ * separate key, so each language decides for itself which words are emphasised
+ * without the sentence being chopped into fragments.
+ */
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
+  const reduce = usePrefersReducedMotion();
+
+  /**
+   * Split the H1 into words, tagging those that fall inside the accent clause.
+   *
+   * Tokenising the whole sentence once — rather than slicing it around the
+   * accent and splitting each piece — matters: the accent usually ends mid-word
+   * ("…voir venir" inside "…voir venir."), and slicing first left the trailing
+   * "." as a word of its own, rendering as an orphaned period after a space.
+   */
+  const words = useMemo(() => {
+    const sentence = t.hero.h1;
+    const accent = t.hero.h1Accent;
+    const at = accent ? sentence.indexOf(accent) : -1;
+    const accentStart = at;
+    const accentEnd = at < 0 ? -1 : at + accent.length;
+
+    const out = [];
+    const re = /\S+/g;
+    let match;
+    while ((match = re.exec(sentence)) !== null) {
+      const start = match.index;
+      const mid = start + match[0].length / 2;
+      out.push({
+        word: match[0],
+        isAccent: accentStart >= 0 && mid > accentStart && mid < accentEnd,
+      });
+    }
+    return out;
+  }, [t.hero.h1, t.hero.h1Accent]);
 
   return (
-    <section className="hero" id="hero">
-      <div className="hero-bg"></div>
+    <section className="hero section-dark" id="hero">
+      <div className="hero-bg" aria-hidden="true" />
+      <div className="hero-grid-glow" aria-hidden="true" />
+
       <div className="wrap hero-inner">
         <div className="hero-text">
-          <h1 className="hero-headline">
-            {t.hero.titleLine1}<br />
-            {t.hero.titlePrefix}<span className="accent">{t.hero.titleAccent}</span>
-          </h1>
-          <p className="hero-desc">
-            {t.hero.desc}
-          </p>
-          <div className="hero-ctas">
-            <a href="#solution" className="btn btn-primary">
-              {t.hero.ctaPrimary} <span className="btn-arrow">→</span>
-            </a>
-            <a href="#how" className="btn btn-hero-secondary">
-              <span className="play-btn-circle">
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor">
-                  <polygon points="3 1 11 6 3 11" />
-                </svg>
-              </span>{' '}
+          <motion.p
+            className="hero-eyebrow"
+            variants={fadeUp({ y: 14, duration: 0.6, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            {t.hero.eyebrow}
+          </motion.p>
+
+          <motion.h1
+            className="hero-headline"
+            variants={stagger({ each: 0.055, delayChildren: 0.12, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* aria-label carries the clean sentence; the spans are decorative
+                so a screen reader is not read a word-per-element stream */}
+            <span className="sr-only">{t.hero.h1}</span>
+            <span aria-hidden="true">
+              {words.map(({ word, isAccent }, i) => (
+                // The real space between masks matters: spacing the words with
+                // CSS margin alone makes them concatenate when copied.
+                <React.Fragment key={`${word}-${i}`}>
+                  <span className="hero-word-mask">
+                    <motion.span
+                      className={`hero-word ${isAccent ? 'accent' : ''}`}
+                      variants={wordReveal({ reduce })}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>{' '}
+                </React.Fragment>
+              ))}
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="hero-sub"
+            variants={fadeUp({ delay: 0.2, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            {t.hero.sub}
+          </motion.p>
+
+          <motion.ul
+            className="hero-proof"
+            variants={stagger({ each: 0.08, delayChildren: 0.32, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            {t.hero.proof.map((line, i) => (
+              <motion.li key={line} className="hero-proof-item" variants={fadeUp({ y: 16, reduce })}>
+                <Icon3D name={PROOF_ICONS[i]} size={40} label={line} className="hero-proof-icon" />
+                <span>{line}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
+
+          <motion.div
+            className="hero-ctas"
+            variants={fadeUp({ delay: 0.5, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            <MagneticButton href="#final" className="btn btn-primary">
+              {t.hero.ctaPrimary}
+              <span className="btn-arrow" aria-hidden="true">
+                {isRtl ? '←' : '→'}
+              </span>
+            </MagneticButton>
+            <MagneticButton href="#providers" className="btn btn-hero-secondary" strength={6}>
               {t.hero.ctaSecondary}
-            </a>
-          </div>
+            </MagneticButton>
+          </motion.div>
+
+          {/* Hardware is not the price of entry — said right under the CTA,
+              because the subheadline above describes the kit and a reader
+              without one should not conclude the product is not for them. */}
+          <motion.p
+            className="hero-nokit"
+            variants={fadeUp({ y: 12, delay: 0.62, reduce })}
+            initial="hidden"
+            animate="visible"
+          >
+            <a href="#modes">{t.hero.noKit}</a>
+          </motion.p>
         </div>
 
-        <div className="hero-visual">
-          <div className="phone-mockup-wrap">
-            <img src="/phoneMockup.webp" alt="Application TAQA sur smartphone" className="phone-mockup-img" width="380" />
-          </div>
-
-          <div className="metric-card metric-1">
-            <div className="metric-icon-box metric-icon-green">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
-              </svg>
-            </div>
-            <div className="metric-info">
-              <span className="metric-value">4.8 kWh</span>
-              <span className="metric-label">{t.hero.metricToday}</span>
-            </div>
-          </div>
-
-          <div className="metric-card metric-2">
-            <div className="metric-icon-box metric-icon-green">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 4v16m-6-6l6 6 6-6" />
-              </svg>
-            </div>
-            <div className="metric-info">
-              <span className="metric-value">12%</span>
-              <span className="metric-label">{t.hero.metricWeek}</span>
-            </div>
-          </div>
-
-          <div className="metric-card metric-3">
-            <div className="metric-icon-box metric-icon-gold">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z" />
-                <path d="M16 12h2" />
-              </svg>
-            </div>
-            <div className="metric-info">
-              <span className="metric-value">1,240 DZD</span>
-              <span className="metric-label">{t.hero.metricEstimated}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-benefits">
-          <div className="hero-benefit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
-            </svg>
-            {t.hero.benefit1}
-          </div>
-          <div className="hero-benefit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 11-5.74V7a4 4 0 0 1 4 4v1a7 7 0 0 1-8 8Z" />
-              <path d="M11 20v-6" />
-            </svg>
-            {t.hero.benefit2}
-          </div>
-          <div className="hero-benefit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 20h10" />
-              <path d="M10 20c0-4 1-7 4-9 0-3-2.5-5-5-5a5 5 0 0 0-5 5c3 2 4 5 4 9Z" />
-              <path d="M14 11c2-1 4-1 5 1" />
-            </svg>
-            {t.hero.benefit3}
-          </div>
-        </div>
+        <motion.div
+          className="hero-visual"
+          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 30 }}
+          animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25, ease: EASE_OUT }}
+        >
+          <PhoneShowcase />
+        </motion.div>
       </div>
     </section>
   );

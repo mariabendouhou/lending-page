@@ -1,12 +1,23 @@
 :root {
+  /* brand — unchanged */
   --dark: #06251B;
+  --dark-2: #0A3227;
   --dark-text: #10251F;
   --green: #69E6B0;
   --green-soft: #B9F2D5;
+  --green-deep: #1C563D;
   --light: #F5F7F0;
   --white: #FFFFFF;
   --border: #DDE5DE;
   --border-dark: rgba(185, 242, 213, 0.16);
+
+  /* accents already in use by the hero metric cards and problem widgets */
+  --gold: #E8C37A;
+  --coral: #FC8B7E;
+
+  --muted-on-dark: rgba(255, 255, 255, 0.68);
+  --faint-on-dark: rgba(255, 255, 255, 0.5);
+  --muted-on-light: #4B6158;
 
   --s1: 8px;
   --s2: 16px;
@@ -20,13 +31,40 @@
   --s10: 120px;
 
   --radius-card: 20px;
+  --radius-sm: 12px;
   --radius-pill: 999px;
 
-  --serif: 'Manrope', 'Inter', sans-serif;
-  --mono: 'IBM Plex Mono', monospace;
+  /* Plus Jakarta Sans: geometric, tall x-height, and the closest Google face
+     to the app's own UI type (see public/ui). JetBrains Mono for the technical
+     labels — its figures are unmistakably instrument-panel. */
+  --serif: 'Plus Jakarta Sans', 'Manrope', 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fluid type scale. The H1 is the largest text on the page in every locale
+     and is clamped so it still fits three languages at 390px (brief §3.1). */
+  --fs-h1: clamp(2.05rem, 5.4vw, 4rem);
+  --fs-h2: clamp(1.6rem, 3.2vw, 2.6rem);
+  --fs-h3: clamp(1.05rem, 1.5vw, 1.3rem);
+  --fs-lead: clamp(1rem, 1.25vw, 1.15rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
 }
 
 html[lang="ar"] {
   --serif: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
   --mono: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+  /* Arabic glyphs are taller and carry no uppercase, so the same pixel size
+     reads larger. Step the display sizes down slightly and open up the leading. */
+  --fs-h1: clamp(1.9rem, 4.9vw, 3.6rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2.4rem);
+  --ar-line-bump: 0.08;
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  line-height: 1.32;
+  letter-spacing: 0;
 }

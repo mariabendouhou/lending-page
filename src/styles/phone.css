@@ -1,0 +1,214 @@
+/* ══ HERO PHONE SHOWCASE ═══════════════════════════════════════════════ */
+.phone-showcase {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
+  /* The perspective lives here so the scroll/cursor rotations below read as
+     depth rather than as a squash. */
+  perspective: 1500px;
+  perspective-origin: 50% 45%;
+}
+
+.phone-glow {
+  position: absolute;
+  inset: -22% -32%;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(105, 230, 176, 0.34), transparent 66%),
+    radial-gradient(circle at 70% 78%, rgba(232, 195, 122, 0.16), transparent 62%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.phone-tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* The mockup is a transparent PNG-style asset, so it needs no frame of its
+   own — only the cursor lean, composed on top of the scroll lean above. */
+.phone-mockup {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotateY(var(--cursor-x, 0deg)) rotateX(var(--cursor-y, 0deg));
+  transition: transform 0.45s var(--ease-out);
+  filter: drop-shadow(0 38px 60px rgba(0, 0, 0, 0.5));
+}
+
+/* ── callouts ─────────────────────────────────────────────────────────── */
+.phone-callout {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(8, 32, 24, 0.82);
+  border: 1px solid rgba(105, 230, 176, 0.32);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.callout-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.callout-text strong {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.callout-text em {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Hung clear of the phone's edges: they are annotations pointing AT the
+   screen, so they must not sit on top of the UI they are annotating. */
+.callout-1 {
+  inset-block-start: 13%;
+  inset-inline-start: -34%;
+}
+
+.callout-2 {
+  inset-block-start: 45%;
+  inset-inline-end: -30%;
+}
+
+.callout-3 {
+  inset-block-end: 11%;
+  inset-inline-start: -28%;
+}
+
+@media (max-width: 1320px) {
+  .callout-1 {
+    inset-inline-start: -22%;
+  }
+  .callout-2 {
+    inset-inline-end: -18%;
+  }
+  .callout-3 {
+    inset-inline-start: -16%;
+  }
+}
+
+@media (max-width: 1080px) {
+  .callout-1 {
+    inset-inline-start: -8%;
+  }
+  .callout-2 {
+    inset-inline-end: -6%;
+  }
+  .callout-3 {
+    inset-inline-start: -4%;
+  }
+}
+
+@media (max-width: 640px) {
+  .phone-showcase {
+    max-width: 300px;
+  }
+
+  /* At 390px the callouts cannot hang off the sides without overflowing, so
+     they stack under the phone as a legible row instead of being hidden. */
+  .phone-callout {
+    position: static;
+    inset: auto;
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+
+  .phone-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .phone-tilt {
+    margin-block-end: var(--s2);
+  }
+
+  .callout-text strong {
+    font-size: 14px;
+  }
+}
+
+/* ══ BACK TO TOP ═══════════════════════════════════════════════════════ */
+.to-top {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline-end: 24px;
+  z-index: 60;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 32, 24, 0.86);
+  border: 1px solid rgba(105, 230, 176, 0.32);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  color: var(--green);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.to-top:hover {
+  border-color: var(--green);
+  background: rgba(105, 230, 176, 0.16);
+}
+
+/* The ring is the read-progress indicator, so the control also tells you
+   where you are rather than only offering to take you back. */
+.to-top-ring {
+  position: absolute;
+  inset: -1px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+[dir='rtl'] .to-top-ring {
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.to-top-ring circle {
+  fill: none;
+  stroke-width: 2;
+}
+
+.to-top-ring .track {
+  stroke: rgba(185, 242, 213, 0.14);
+}
+
+.to-top-ring .bar {
+  stroke: var(--green);
+  stroke-linecap: round;
+}
+
+.to-top-icon {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .to-top {
+    inset-block-end: 16px;
+    inset-inline-end: 16px;
+    width: 46px;
+    height: 46px;
+  }
+}
