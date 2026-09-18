@@ -43,7 +43,7 @@ export const translations = {
       dir: 'ltr',
       title: 'TaQa Contrôle — Voyez votre consommation avant la facture',
       description:
-        'Photographiez votre facture Sonelgaz, suivez votre tranche en direct, payez sans quitter l’application. Et avec un kit : consommation par circuit et pilotage à distance. Conçu en Algérie.',
+        'Photographiez votre facture Sonelgaz, suivez votre tranche au fil du trimestre, payez sans quitter l’application. Et avec un kit : consommation par circuit et pilotage à distance. Conçu en Algérie.',
       ogAlt: 'Tableau de bord TaQa Contrôle : consommation par circuit et par tranche Sonelgaz',
       keywords:
         'facture Sonelgaz, tranches Sonelgaz, scanner facture, paiement Sonelgaz en ligne, consommation électrique Algérie, relevé compteur, suivi énergie Algérie',
@@ -77,7 +77,7 @@ export const translations = {
       ctaSecondary: "Pour les fournisseurs d'énergie",
       noKit: 'Pas de kit ? Commencez avec votre facture papier.',
       callouts: [
-        { icon: 'gauge', tone: 'gold', value: '18 kWh', label: 'avant la tranche plus chère' },
+        { icon: 'gauge', tone: 'gold', value: '18 kWh', label: 'avant la tranche supérieure' },
         { icon: 'card', tone: 'green', value: '796 DZD', label: 'dépensés ce trimestre' },
         { icon: 'leaf', tone: 'greenSoft', value: '147 kg CO₂', label: '≈ 80 arbres pendant un mois' },
       ],
@@ -102,11 +102,11 @@ export const translations = {
           title: 'Une consommation invisible',
           body: "Impossible de désigner l'appareil responsable. Vous voyez un montant, jamais une cause.",
           stat: '90',
-          statUnit: 'jours sans retour',
+          statUnit: 'jours sans aucune information',
         },
         {
           title: 'Le saut de tranche',
-          body: 'Passer la 2ᵉ tranche multiplie votre prix du kWh par 2,35 — et fait passer la TVA de 9 % à 19 %.',
+          body: 'Franchir la 2ᵉ tranche multiplie votre prix du kWh par 2,35 — et fait passer la TVA de 9 % à 19 %.',
           stat: '×2,35',
           statUnit: 'au 126ᵉ kWh',
         },
@@ -117,6 +117,22 @@ export const translations = {
           statUnit: 'MW au pic national, été 2026',
         },
       ],
+      blindspot: {
+        without: 'Sans TAQA Control',
+        withoutSub: "L'énergie tourne. Vous découvrez le coût à l'arrivée de la facture.",
+        with: 'Avec TAQA Control',
+        withSub: 'Consommation, coût et changement de tranche — avant la facture.',
+        blind: '90 jours sans visibilité',
+        bill: 'FACTURE REÇUE',
+        amount: '2 882',
+        currency: 'DZD',
+        months: ['Juin', 'Juillet', 'Août'],
+        usageToday: "Aujourd'hui",
+        usageValue: '7,8 kWh',
+        entered: 'Entrée T3',
+        projected: 'Facture estimée',
+        projectedVal: '~2 640 DZD',
+      },
       footnote:
         "Tarifs ménages Sonelgaz, code 54 M : 4 tranches trimestrielles progressives. Les 125 premiers kWh restent toujours au tarif social — seuls les kWh suivants changent de prix. Pic national : Sonelgaz, été 2026.",
     },
@@ -124,7 +140,7 @@ export const translations = {
     solution: {
       eyebrow: 'LA VISIBILITÉ',
       title: 'Votre compteur, enfin lisible.',
-      lead: "Où vous en êtes dans les 4 tranches Sonelgaz, ce qu'il reste avant la suivante, et ce que vous devez déjà — mis à jour sans attendre le relevé.",
+      lead: "Où vous en êtes dans les 4 tranches Sonelgaz, ce qu'il reste avant la suivante, et le montant déjà dû — mis à jour sans attendre le relevé.",
       pillars: [
         {
           title: 'Connaissez votre tranche avant de la franchir',
@@ -169,13 +185,14 @@ export const translations = {
           body: "Un module se pose sur votre tableau électrique, une voie de mesure par circuit. Vous passez du trimestre à la seconde, et vous pouvez agir à distance.",
           points: [
             'Consommation en direct, circuit par circuit',
-            'Détail par appareil là où le matériel sait l’attribuer',
+            'Détail par appareil quand le matériel sait l’attribuer',
             'Pilotage à distance des circuits secondaires',
             'Plafond de budget appliqué automatiquement',
           ],
         },
       ],
-      note: "Un foyer sans kit voit une version honnête de l'application, pas une interface trouée d'emplacements vides.",
+      visualAlt: "L'application TaQa Contrôle sur deux téléphones : l'accueil avec la tranche en cours, et l'écran Énergie avec la consommation par appareil",
+      note: "Un foyer sans kit voit une version honnête de l'application, pas une interface pleine d’emplacements vides.",
     },
 
     how: {
@@ -187,7 +204,7 @@ export const translations = {
           body: "Un numéro de téléphone et un code reçu par SMS. Vous nommez votre foyer et saisissez votre numéro de compteur.",
         },
         {
-          title: 'Vous alimentez',
+          title: 'Vous le renseignez',
           body: "Photographiez votre facture, ou saisissez un relevé. Avec un kit, la mesure arrive toute seule, chaque seconde et par circuit.",
         },
         {
@@ -218,12 +235,12 @@ export const translations = {
           body: "Les quatre tranches, leurs tarifs, votre position et les kWh restants avant la marche suivante.",
         },
         {
-          title: 'Vos factures, séparées de vos photos',
-          body: "« Mes factures » ne montre que ce que Sonelgaz a émis. Vos scans restent dans l'historique, à part.",
+          title: 'Appareil par appareil',
+          body: "Jour, semaine, mois ou trimestre. La courbe de la période comparée à la précédente, et la part de chaque appareil.",
         },
         {
-          title: 'Alertes et signalements',
-          body: "Seuil de budget, coupure, retour du courant, facture à échéance — et les alertes publiées par l'opérateur pour votre wilaya, dans une seule liste.",
+          title: "L'essentiel reste protégé",
+          body: "Réfrigérateur, congélateur, pompe à eau : marqués P1, sans interrupteur dans l'application. Seuls les appareils P2 se coupent.",
         },
         {
           title: 'Votre foyer, à plusieurs',
@@ -235,7 +252,7 @@ export const translations = {
     dashboard: {
       eyebrow: 'LE PORTAIL OPÉRATEUR',
       title: 'La salle de contrôle, sur un seul écran.',
-      lead: "Le portail que voient les équipes Sonelgaz : la carte du réseau par wilaya, la corbeille des signalements, le composeur d'alertes et le journal d'audit. Quatre rôles, un périmètre géographique par compte.",
+      lead: "Le portail que voient les équipes Sonelgaz : la carte du réseau par wilaya, la file des signalements, l'éditeur d'alertes et le journal d'audit. Quatre rôles, un périmètre géographique par compte.",
       bullets: [
         'Carte du réseau, wilaya par wilaya',
         'Signalements : accuser, qualifier, attribuer, résoudre',
@@ -275,7 +292,7 @@ export const translations = {
       toggleLabel: 'Allumer ou éteindre {name}',
       extras: [
         { title: 'Mode absence', body: "L'application le propose quand le logement semble vide, et vous prévient à la fin de la session." },
-        { title: 'Programmations', body: 'Des plages de marche et d’arrêt récurrentes, réglées au pouce.' },
+        { title: 'Programmations', body: 'Des plages de marche et d’arrêt récurrentes, réglées d’un simple geste.' },
         { title: 'Effacement du foyer', body: 'Vous choisissez quel circuit cède en premier quand le plafond de budget est atteint.' },
       ],
       limit:
@@ -284,8 +301,8 @@ export const translations = {
 
     loop: {
       eyebrow: 'SIGNALEMENTS',
-      title: 'Un problème signalé arrive à quelqu’un.',
-      lead: "Vous photographiez, vous envoyez. Le signalement entre dans la corbeille des opérateurs qui couvrent votre wilaya, et chaque changement de statut vous revient.",
+      title: 'Un signalement arrive à une vraie personne.',
+      lead: "Vous photographiez, vous envoyez. Le signalement entre dans la file des opérateurs qui couvrent votre wilaya, et chaque changement de statut vous revient.",
       steps: [
         { title: 'Vous signalez', body: 'Avec photos, depuis le tableau de bord.' },
         { title: 'L’opérateur accuse réception', body: 'Puis qualifie et attribue le signalement.' },
@@ -305,11 +322,11 @@ export const translations = {
         },
         {
           title: 'Signalements et terrain',
-          body: "La corbeille des signalements résidents, les transitions accuser → qualifier → attribuer → résoudre, et la planche de dispatch des agents.",
+          body: "La file des signalements résidents, les transitions accuser réception → qualifier → attribuer → résoudre, et le tableau d’affectation des agents.",
         },
         {
           title: 'Alertes publiques',
-          body: "Un composeur avec copie française et arabe, ciblage géographique, et un aperçu du nombre de destinataires avant publication.",
+          body: "Un éditeur avec un texte en français et en arabe, ciblage géographique, et un aperçu du nombre de destinataires avant publication.",
         },
         {
           title: 'Émission de factures',
@@ -528,6 +545,22 @@ export const translations = {
           statUnit: 'MW national peak, summer 2026',
         },
       ],
+      blindspot: {
+        without: 'Without TAQA Control',
+        withoutSub: 'Energy keeps running. You see the cost when the bill arrives.',
+        with: 'With TAQA Control',
+        withSub: 'See usage, cost and tariff changes before the bill arrives.',
+        blind: '90 days with no visibility',
+        bill: 'BILL ARRIVES',
+        amount: '2,882',
+        currency: 'DZD',
+        months: ['June', 'July', 'August'],
+        usageToday: 'Today',
+        usageValue: '7.8 kWh',
+        entered: 'Entered T3',
+        projected: 'Estimated bill',
+        projectedVal: '~2,640 DZD',
+      },
       footnote:
         'Sonelgaz household tariff, code 54 M: four progressive quarterly tranches. Your first 125 kWh always stay at the social rate — only the kWh above each threshold are repriced. National peak: Sonelgaz, summer 2026.',
     },
@@ -586,6 +619,7 @@ export const translations = {
           ],
         },
       ],
+      visualAlt: 'The TaQa Contrôle app on two phones: the home screen with the current tranche, and the Energy screen with per-appliance usage',
       note: 'A household without a kit sees an honest version of the app, not a hardware-shaped one with empty slots.',
     },
 
@@ -629,12 +663,12 @@ export const translations = {
           body: 'All four tranches, their rates, your position, and the kWh left before the next step up.',
         },
         {
-          title: 'Your bills, kept apart from your photos',
-          body: '“My bills” shows only what Sonelgaz issued. Your own scans stay in the history, separately.',
+          title: 'Appliance by appliance',
+          body: 'Day, week, month or quarter. This period’s curve against the last, and every appliance’s share of it.',
         },
         {
-          title: 'Alerts and reports',
-          body: 'Budget thresholds, blackouts, restorations, a bill coming due — and the alerts your operator published for your wilaya, in one list.',
+          title: 'The essentials stay protected',
+          body: 'Fridge, freezer, water pump: marked P1, with no switch in the app at all. Only P2 appliances can be cut.',
         },
         {
           title: 'Your home, shared',
@@ -865,7 +899,7 @@ export const translations = {
       dir: 'rtl',
       title: 'طاقة كونترول — شاهد استهلاكك قبل أن تصلك الفاتورة',
       description:
-        'صوّر فاتورة سونلغاز، وتابع شريحتك وهي تمتلئ، وادفع دون أن تخرج من التطبيق. وبإضافة العدّة: استهلاك لكل دائرة وتحكّم عن بُعد. صُمّم في الجزائر.',
+        'صوّر فاتورة سونلغاز، وتابع موقعك في الشرائح، وادفع دون أن تخرج من التطبيق. وبإضافة وحدة القياس: استهلاك لكل دائرة وتحكّم عن بُعد. صُمّم في الجزائر.',
       ogAlt: 'لوحة تحكّم طاقة كونترول: الاستهلاك حسب الدائرة وحسب شريحة سونلغاز',
       keywords:
         'فاتورة سونلغاز، شرائح سونلغاز، تصوير الفاتورة، دفع فاتورة سونلغاز، استهلاك الكهرباء الجزائر، قراءة العدّاد، متابعة الطاقة',
@@ -897,7 +931,7 @@ export const translations = {
       ],
       ctaPrimary: 'ابدأ المتابعة',
       ctaSecondary: 'لمزوّدي الطاقة',
-      noKit: 'لا تملك العدّة؟ ابدأ بفاتورتك الورقية.',
+      noKit: 'لا تملك الوحدة؟ ابدأ بفاتورتك الورقية.',
       callouts: [
         { icon: 'gauge', tone: 'gold', value: '١٨ كيلوواط‑ساعة', label: 'قبل الشريحة الأغلى' },
         { icon: 'card', tone: 'green', value: '٧٩٦ دج', label: 'أُنفقت هذا الفصل' },
@@ -918,13 +952,13 @@ export const translations = {
     problem: {
       eyebrow: 'المشكلة الحقيقية',
       title: 'تأتي الفاتورة، بعد ثلاثة أشهر من فوات الأوان.',
-      lead: 'تُقرأ عدّادك مرّة كل ثلاثة أشهر. إلى ذلك الحين أنت تُخمّن — وما تعتاده في جوان لا تدفعه إلا في سبتمبر.',
+      lead: 'تقرأ سونلغاز عدّادك مرّة كل ثلاثة أشهر. إلى ذلك الحين أنت تُخمّن — وما تعتاده في جوان لا تدفعه إلا في سبتمبر.',
       cards: [
         {
           title: 'استهلاك لا تراه',
           body: 'لا تستطيع تحديد الجهاز المسؤول. يصلك مبلغ، ولا يصلك سبب أبدًا.',
           stat: '٩٠',
-          statUnit: 'يومًا دون أي إشارة',
+          statUnit: 'يومًا دون أي مؤشّر',
         },
         {
           title: 'قفزة الشريحة',
@@ -939,8 +973,24 @@ export const translations = {
           statUnit: 'ميغاواط في الذروة الوطنية، صيف ٢٠٢٦',
         },
       ],
+      blindspot: {
+        without: 'بدون TAQA Control',
+        withoutSub: 'الطاقة تعمل باستمرار. لا ترى التكلفة إلا عند وصول الفاتورة.',
+        with: 'مع TAQA Control',
+        withSub: 'الاستهلاك والتكلفة وتغيّر الشريحة — قبل الفاتورة.',
+        blind: '٩٠ يومًا بلا رؤية',
+        bill: 'وصلت الفاتورة',
+        amount: '٢٨٨٢',
+        currency: 'دج',
+        months: ['جوان', 'جويلية', 'أوت'],
+        usageToday: 'اليوم',
+        usageValue: '٧٫٨ كيلوواط‑س',
+        entered: 'دخلت ش٣',
+        projected: 'الفاتورة المتوقّعة',
+        projectedVal: '~٢٦٤٠ دج',
+      },
       footnote:
-        'تسعيرة سونلغاز للمنازل، الرمز 54 M‎: أربع شرائح فصلية تصاعدية. أول ١٢٥ كيلوواط‑ساعة تبقى دائمًا بالتسعيرة الاجتماعية — ولا يتغيّر السعر إلا على ما يزيد عن كل حدّ. الذروة الوطنية: سونلغاز، صيف ٢٠٢٦.',
+        'تسعيرة سونلغاز للمنازل، الرمز 54 M‎: أربع شرائح فصلية تصاعدية. أول ١٢٥ كيلوواط‑ساعة تبقى دائمًا بالتسعيرة الاجتماعية — ولا يُعاد تسعير إلا ما يزيد عن كل حدّ. الذروة الوطنية: سونلغاز، صيف ٢٠٢٦.',
     },
 
     solution: {
@@ -958,7 +1008,7 @@ export const translations = {
         },
         {
           title: 'كل دائرة، لا المجموع فقط',
-          body: 'مع العدّة: الإنارة والمقابس والمكيّف وسخّان الماء — لكل خط في لوحتك منحناه الخاص.',
+          body: 'مع الوحدة: الإنارة والمقابس والمكيّف وسخّان الماء — لكل خط في لوحتك منحناه الخاص.',
         },
       ],
       tranches: {
@@ -970,9 +1020,9 @@ export const translations = {
     },
 
     modes: {
-      eyebrow: 'طريقتان للبداية',
+      eyebrow: 'طريقتان للبدء',
       title: 'لا تحتاج إلى أي جهاز لتبدأ.',
-      lead: 'معظم المنازل تبدأ دون تركيب أي شيء. العدّة تضيف اللحظية والتحكّم — وليست شرطًا للدخول.',
+      lead: 'معظم المنازل تبدأ دون تركيب أي شيء. وحدة القياس تضيف المتابعة اللحظية والتحكّم — وليست شرطًا للبدء.',
       cards: [
         {
           badge: 'دون أجهزة',
@@ -986,18 +1036,19 @@ export const translations = {
           ],
         },
         {
-          badge: 'مع العدّة',
+          badge: 'مع الوحدة',
           title: 'وحدة القياس والتحكّم عن بُعد',
           body: 'تُثبّت وحدة على لوحتك الكهربائية، بقناة قياس لكل دائرة. فتنتقل من الفصل إلى الثانية، ويصبح بإمكانك التحكّم من أي مكان.',
           points: [
             'استهلاك مباشر، دائرةً بدائرة',
-            'تفصيل حسب الجهاز حيث يستطيع العتاد تمييزه',
+            'تفصيل حسب الجهاز حيث تستطيع الوحدة تمييزه',
             'تشغيل وإطفاء الدوائر الثانوية عن بُعد',
             'سقف ميزانية يُطبَّق تلقائيًا',
           ],
         },
       ],
-      note: 'المنزل بلا عدّة يرى نسخة صادقة من التطبيق، لا واجهة مثقوبة بخانات فارغة.',
+      visualAlt: 'تطبيق طاقة كونترول على هاتفين: الشاشة الرئيسية مع الشريحة الحالية، وشاشة الطاقة مع الاستهلاك حسب الجهاز',
+      note: 'المنزل بلا وحدة يرى نسخة صادقة من التطبيق، لا واجهة مثقوبة بخانات فارغة.',
     },
 
     how: {
@@ -1009,8 +1060,8 @@ export const translations = {
           body: 'رقم هاتف ورمز يصلك برسالة. تُسمّي منزلك وتُدخل رقم عدّادك.',
         },
         {
-          title: 'تُغذّيه',
-          body: 'صوّر فاتورة، أو أدخل قراءة. ومع العدّة يصل القياس وحده، كل ثانية ولكل دائرة.',
+          title: 'تُدخل البيانات',
+          body: 'صوّر فاتورة، أو أدخل قراءة. ومع الوحدة يصل القياس وحده، كل ثانية ولكل دائرة.',
         },
         {
           title: 'تفهم',
@@ -1018,7 +1069,7 @@ export const translations = {
         },
         {
           title: 'تتحكّم',
-          body: 'ادفع على بوّابة سونلغاز دون الخروج من التطبيق. ومع العدّة، اقطع دائرة ثانوية من هاتفك.',
+          body: 'ادفع على بوّابة سونلغاز دون الخروج من التطبيق. ومع الوحدة، اقطع دائرة ثانوية من هاتفك.',
         },
       ],
     },
@@ -1040,16 +1091,16 @@ export const translations = {
           body: 'الشرائح الأربع وأسعارها، وموقعك، وما بقي من كيلوواط‑ساعة قبل الدرجة التالية.',
         },
         {
-          title: 'فواتيرك بعيدًا عن صورك',
-          body: '«فواتيري» تعرض ما أصدرته سونلغاز فقط. وتبقى صورك في السجل، على حدة.',
+          title: 'جهازًا بجهاز',
+          body: 'يوم أو أسبوع أو شهر أو فصل. منحنى الفترة مقارنًا بالفترة السابقة، وحصّة كل جهاز منه.',
         },
         {
-          title: 'التنبيهات والإبلاغ',
-          body: 'حدود الميزانية والانقطاع وعودة التيار وفاتورة قاربت أجلها — مع ما ينشره المزوّد لولايتك، في قائمة واحدة.',
+          title: 'الأساسي يبقى محميًّا',
+          body: 'الثلاجة والمجمِّدة ومضخّة الماء: مصنّفة P1‎ وبلا مفتاح في التطبيق. ولا يُقطع إلا ما صُنّف P2‎.',
         },
         {
           title: 'منزلك، بالمشاركة',
-          body: 'عدّة منازل في حساب واحد، ومشاركة المنزل مع عائلتك كمالك أو مشرف أو مُطالِع.',
+          body: 'منازل متعدّدة في حساب واحد، ومشاركة المنزل مع عائلتك كمالك أو مشرف أو مُشاهد.',
         },
       ],
     },
@@ -1067,7 +1118,7 @@ export const translations = {
       alt: 'بوّابة مشغّل طاقة كونترول: نظرة عامة على الشبكة، وخريطة حسب الولاية، ومنحنيات الحمل',
       hint: 'حرّك المؤشّر لإمالة الشاشة',
       caption:
-        'صورة من البوّابة. مؤشّرات الحمل المعروضة هنا توضيحية: نطاق الشبكة مُنمذج ولم يُربط بعد (انظر خارطة الطريق).',
+        'صورة من البوّابة. مؤشّرات الحمل المعروضة هنا توضيحية: نطاق الشبكة مُصمَّم ولم يُربط بعد (انظر خارطة الطريق).',
     },
 
     devices: {
@@ -1082,7 +1133,7 @@ export const translations = {
       locked: 'مقفل',
       essentials: [
         { name: 'الثلاجة', room: 'المطبخ', icon: 'fridge', watts: 120, dzd: 9 },
-        { name: 'المجمّدة', room: 'المطبخ', icon: 'freezer', watts: 95, dzd: 7 },
+        { name: 'المُجمِّدة', room: 'المطبخ', icon: 'freezer', watts: 95, dzd: 7 },
         { name: 'مضخّة الماء', room: 'الخارج', icon: 'waterPump', watts: 0, dzd: 3 },
         { name: 'الإنارة الداخلية', room: 'الصالون', icon: 'lighting', watts: 40, dzd: 2 },
       ],
@@ -1092,8 +1143,8 @@ export const translations = {
         { name: 'سخّان الماء', room: 'الحمّام', icon: 'waterHeater', watts: 1800, dzd: 18 },
       ],
       total: 'المجموع المباشر',
-      on: 'مشتغل',
-      off: 'مطفأ',
+      on: 'مُشغَّل',
+      off: 'مُطفأ',
       toggleLabel: 'تشغيل أو إطفاء {name}',
       extras: [
         { title: 'وضع الغياب', body: 'يقترحه التطبيق عندما يبدو المنزل فارغًا، ويُعلمك عند انتهاء الجلسة.' },
@@ -1101,13 +1152,13 @@ export const translations = {
         { title: 'تخفيف أحمال المنزل', body: 'تختار أي دائرة تتراجع أولًا عند بلوغ سقف الميزانية.' },
       ],
       limit:
-        'يعمل المُرحّل على الدوائر الثانوية المؤهّلة في عدّة مقترنة. ولا يمكنه قطع تغذيتك من سونلغاز، وما صُنّف P1‎ لا يمكن قطعه من التطبيق إطلاقًا.',
+        'يعمل المُرحّل على الدوائر الثانوية المؤهّلة في وحدة مقترنة. ولا يمكنه قطع تغذيتك من سونلغاز، وما صُنّف P1‎ لا يمكن قطعه من التطبيق إطلاقًا.',
     },
 
     loop: {
       eyebrow: 'الإبلاغ',
-      title: 'ما تُبلّغ عنه يصل إلى جهة فعلية.',
-      lead: 'تصوّر المشكلة وترسلها. يدخل البلاغ إلى صندوق المشغّلين الذين يغطّون ولايتك، ويعود إليك كل تغيّر في حالته.',
+      title: 'بلاغك يصل إلى شخص فعلًا.',
+      lead: 'تأخذ صورة وترسلها. يدخل البلاغ إلى صندوق المشغّلين الذين يغطّون ولايتك، ويعود إليك كل تغيّر في حالته.',
       steps: [
         { title: 'تُبلّغ', body: 'بالصور، من لوحة التحكّم.' },
         { title: 'يستلم المشغّل', body: 'ثم يصنّف البلاغ ويُحيله.' },
@@ -1135,15 +1186,15 @@ export const translations = {
         },
         {
           title: 'إصدار الفواتير',
-          body: 'من بطاقة المنزل، بعد أن يتحدّد أي منزل هذا. ورفض رقم الفاتورة نفسه مرّتين على المنزل نفسه.',
+          body: 'من بطاقة المنزل، بعد أن يتّضح أيّ منزل هو المعني. ويُرفض رقم الفاتورة نفسه إذا تكرّر على المنزل نفسه.',
         },
       ],
       alarms: {
         title: 'تمييزان لا يختلطان أبدًا',
         items: [
           {
-            title: 'تيار التسرّب مستوى قائم بذاته',
-            body: 'فوق مستوى «الخطر». تيارٌ يجد طريقه عبر السباكة أو حائط رطب أو عبر إنسان ليس خطرًا على المعدّات. الأول يُرسل فرقة بالوتيرة المعتادة، والثاني يُرسلها الآن.',
+            title: 'لتيار التسرّب مستواه الخاص',
+            body: 'فوق مستوى «الخطر». تيارٌ يجد طريقه عبر السباكة أو حائط رطب أو عبر إنسان ليس خطرًا على المعدّات. خطر المعدّات يُرسل فرقة بالوتيرة المعتادة، أمّا هذا فيُرسلها الآن.',
           },
           {
             title: 'قاطع المنزل ليس انقطاعًا في الشبكة',
@@ -1198,15 +1249,15 @@ export const translations = {
       items: [
         {
           q: 'هل أحتاج إلى أجهزة لأبدأ؟',
-          a: 'لا. يكفي هاتف وفاتورتك الورقية: تصوّرها، وتصحّح ما استخرجته القراءة الآلية، ثم تتابع شريحتك وتقدير فصلك. والعدّة تضيف اللحظية لكل دائرة والتحكّم عن بُعد — وليست شرطًا للدخول.',
+          a: 'لا. يكفي هاتف وفاتورتك الورقية: تصوّرها، وتصحّح ما استخرجته القراءة الآلية، ثم تتابع شريحتك وتقدير فصلك. ووحدة القياس تضيف المتابعة اللحظية لكل دائرة والتحكّم عن بُعد — وليست شرطًا للدخول.',
         },
         {
           q: 'هل أحتاج إلى عدّاد خاص؟',
-          a: 'لا. تُركَّب العدّة إلى جانب تركيبتك الحالية، عبر وحدة قياس متوافقة مع عدّادات سونلغاز المعتادة. وفي الغالبية الكبرى من الحالات لا حاجة إلى استبدال العدّاد.',
+          a: 'لا. تُركَّب الوحدة إلى جانب تركيبتك الحالية، عبر وحدة قياس متوافقة مع عدّادات سونلغاز المعتادة. وفي الغالبية الكبرى من الحالات لا حاجة إلى استبدال العدّاد.',
         },
         {
           q: 'كيف تعرفون شريحتي عند سونلغاز؟',
-          a: 'يجمع طاقة كونترول استهلاكك من بداية فصل الفوترة — من قراءاتك أو من قياس العدّة — ويطبّق تسعيرة المنازل السارية بشرائحها الأربع التصاعدية. فترى موقعك بدقّة وما بقي من كيلوواط‑ساعة قبل الشريحة التالية.',
+          a: 'يجمع طاقة كونترول استهلاكك من بداية فصل الفوترة — من قراءاتك أو من قياس الوحدة — ويطبّق تسعيرة المنازل السارية بشرائحها الأربع التصاعدية. فترى موقعك بدقّة وما بقي من كيلوواط‑ساعة قبل الشريحة التالية.',
         },
         {
           q: 'هل يمكنني دفع فاتورتي من التطبيق؟',
@@ -1214,26 +1265,26 @@ export const translations = {
         },
         {
           q: 'هل يمكن لطاقة كونترول قطع الكهرباء عنّي؟',
-          a: 'لا. يعمل المُرحّل على الدوائر الثانوية المؤهّلة في عدّة مقترنة — سخّان ماء أو مكيّف. ولا يمكنه قطع تغذيتك من سونلغاز، والدوائر التي تصنّفها حسّاسة لا يمكن قطعها من التطبيق إطلاقًا. هذا قيد في التصميم، لا سهو.',
+          a: 'لا. يعمل المُرحّل على الدوائر الثانوية المؤهّلة في وحدة مقترنة — سخّان ماء أو مكيّف. ولا يمكنه قطع تغذيتك من سونلغاز، والدوائر التي تصنّفها حسّاسة لا يمكن قطعها من التطبيق إطلاقًا. هذا قيد في التصميم، لا سهو.',
         },
         {
           q: 'هل بياناتي آمنة؟',
-          a: 'تُستضاف بياناتك في الجزائر ولا تُشارَك أبدًا دون موافقتك الصريحة. وتُحدَّد صلاحيات المُطالِع من عضويّاته في المنزل، لا من صلاحية عامة في حسابه. ويمكنك تصدير بياناتك أو طلب حذفها في أي وقت.',
+          a: 'تُستضاف بياناتك في الجزائر ولا تُشارَك أبدًا دون موافقتك الصريحة. وتُحدَّد صلاحيات المُشاهد من عضويّاته في المنزل، لا من صلاحية عامة في حسابه. ويمكنك تصدير بياناتك أو طلب حذفها في أي وقت.',
         },
         {
           q: 'هل يعمل التطبيق دون اتصال مستقر؟',
-          a: 'يبقى الملف الشخصي والمنزل الذي فتحته سابقًا معروضين دون اتصال. ومع العدّة يتواصل القياس ويُرفع عند عودة الشبكة. أما أول تشغيل دون اتصال فلا شيء لديه ليعرضه، ويقول ذلك صراحةً.',
+          a: 'يبقى الملف الشخصي والمنزل الذي فتحته سابقًا معروضين دون اتصال. ومع الوحدة يتواصل القياس ويُرفع عند عودة الشبكة. أما أول تشغيل دون اتصال فلا شيء لديه ليعرضه، ويقول ذلك صراحةً.',
         },
         {
-          q: 'هل يمكنني إدارة عدّة منازل؟',
-          a: 'نعم. يمكن للحساب الواحد أن يحمل عدّة منازل، لكل منها عرضه وأجهزته ودورك فيه. ويُشارَك المنزل مع عائلتك كمالك أو مشرف أو مُطالِع، بدعوات محدّدة المدّة.',
+          q: 'هل يمكنني إدارة منازل متعدّدة؟',
+          a: 'نعم. يمكن للحساب الواحد أن يحمل منازل متعدّدة، لكل منها عرضه وأجهزته ودورك فيه. ويُشارَك المنزل مع عائلتك كمالك أو مشرف أو مُشاهد، بدعوات محدّدة المدّة.',
         },
       ],
     },
 
     finalCta: {
       title: 'فاتورتك القادمة تُكتب الآن. ابدأ بقراءتها.',
-      sub: 'ابدأ بفاتورتك الورقية اليوم. والعدّة تأتي وقت ما تشاء.',
+      sub: 'ابدأ بفاتورتك الورقية اليوم. والوحدة تأتي وقت ما تشاء.',
       button: 'ابدأ المتابعة',
       secondary: 'لمزوّدي الطاقة',
     },

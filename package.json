@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build && node scripts/build-locales.mjs",
     "preview": "vite preview",
-    "build:locales": "node scripts/build-locales.mjs"
+    "build:locales": "node scripts/build-locales.mjs",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
@@ -24,6 +26,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
+    "gh-pages": "^6.3.0",
     "sharp": "^0.35.4",
     "vite": "^5.4.10"
   }

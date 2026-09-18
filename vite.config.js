@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/lending-page/',
   plugins: [react()],
   build: {
     // The 3D stack is lazy (icons3d/Icon3DView, dashboard/DashboardView), but
