@@ -1,0 +1,53 @@
+<svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="plateShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1c2b3a" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="leafGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0e9c4f"/>
+      <stop offset="1" stop-color="#8fdb5e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- leaves, behind the switch plate -->
+  <g>
+    <ellipse cx="152" cy="140" rx="30" ry="9" fill="#0c7a44"/>
+    <g transform="translate(135,140) rotate(-38) scale(0.95)">
+      <path d="M0,0 C-14,-10 -12,-38 0,-50 C12,-38 14,-10 0,0 Z" fill="url(#leafGrad)"/>
+      <path d="M0,-3 L0,-46" stroke="#0c7a44" stroke-width="1.2" opacity="0.6"/>
+    </g>
+    <g transform="translate(150,138) rotate(-8) scale(1.15)">
+      <path d="M0,0 C-14,-10 -12,-38 0,-50 C12,-38 14,-10 0,0 Z" fill="url(#leafGrad)"/>
+      <path d="M0,-3 L0,-46" stroke="#0c7a44" stroke-width="1.2" opacity="0.6"/>
+    </g>
+    <g transform="translate(168,140) rotate(28) scale(0.9)">
+      <path d="M0,0 C-14,-10 -12,-38 0,-50 C12,-38 14,-10 0,0 Z" fill="url(#leafGrad)"/>
+      <path d="M0,-3 L0,-46" stroke="#0c7a44" stroke-width="1.2" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- outer wall plate -->
+  <rect x="35" y="15" width="110" height="118" rx="14" fill="#eaeef2" stroke="#d7dde3" stroke-width="1" filter="url(#plateShadow)"/>
+
+  <!-- inner switch bezel + panel -->
+  <rect x="52" y="32" width="78" height="84" rx="11" fill="#b9c0ca"/>
+  <rect x="56" y="36" width="70" height="76" rx="9" fill="#eef3f7"/>
+
+  <!-- divider between the two switch zones -->
+  <line x1="59" y1="74" x2="123" y2="74" stroke="#d9e0e5" stroke-width="1.5"/>
+
+  <!-- capacitive touch tick marks -->
+  <line x1="91" y1="45" x2="91" y2="50" stroke="#c7cdd4" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="91" cy="130" r="1.6" fill="#c7cdd4"/>
+
+  <!-- small brand mark + status glyph -->
+  <rect x="63" y="98" width="22" height="8" rx="4" fill="#17948f"/>
+  <path d="M104,112 L108,116 L114,109" stroke="#b7bfc9" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- wifi icon -->
+  <g>
+    <path d="M135,28 A39,39 0 0 1 191,28" stroke="#12b389" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M149,42 A20,20 0 0 1 177,42" stroke="#12b389" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="163" cy="52" r="4" fill="#12b389"/>
+  </g>
+</svg>

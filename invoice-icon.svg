@@ -1,0 +1,64 @@
+<svg width="200" height="165" viewBox="0 0 200 165" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="cardShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <filter id="glassShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0b3a40" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- soft background blobs -->
+  <ellipse cx="52" cy="42" rx="72" ry="64" fill="#d3f3e2" opacity="0.9" filter="url(#softBlur)"/>
+  <ellipse cx="152" cy="120" rx="66" ry="58" fill="#d3eef5" opacity="0.85" filter="url(#softBlur)"/>
+  <ellipse cx="20" cy="128" rx="30" ry="26" fill="#cdeee2" opacity="0.7" filter="url(#softBlur)"/>
+
+  <!-- folded-corner flap, behind the card -->
+  <polygon points="20,150 36,164 30,138" fill="#cfe7f2"/>
+
+  <!-- document card, bottom-left corner chamfered like a dog-ear -->
+  <path d="M 38,10
+           L 138,10
+           Q 154,10 154,26
+           L 154,132
+           Q 154,148 138,148
+           L 36,148
+           L 22,134
+           L 22,26
+           Q 22,10 38,10 Z"
+        fill="#fbfeff" stroke="#e4eef4" stroke-width="1.5" filter="url(#cardShadow)"/>
+
+  <!-- title -->
+  <text x="34" y="34" font-family="system-ui, sans-serif" font-size="18" font-weight="800" letter-spacing="0.5" fill="#1c2b45">FACTURE</text>
+
+  <!-- thin divider rule under the title -->
+  <rect x="34" y="44" width="108" height="3" rx="1.5" fill="#bfe1f0"/>
+
+  <!-- content lines (bar + short tail) -->
+  <rect x="34" y="60" width="64" height="7" rx="3.5" fill="#8fcbe8"/>
+  <rect x="104" y="60" width="18" height="7" rx="3.5" fill="#cdeaf6"/>
+
+  <rect x="34" y="76" width="46" height="7" rx="3.5" fill="#8fcbe8"/>
+  <rect x="86" y="76" width="14" height="7" rx="3.5" fill="#cdeaf6"/>
+
+  <rect x="34" y="106" width="70" height="7" rx="3.5" fill="#8fcbe8"/>
+  <rect x="112" y="106" width="16" height="7" rx="3.5" fill="#cdeaf6"/>
+
+  <!-- pagination dots -->
+  <circle cx="40" cy="127" r="6" fill="#a9d8ec"/>
+  <circle cx="56" cy="127" r="6" fill="#a9d8ec"/>
+  <circle cx="72" cy="127" r="6" fill="#a9d8ec"/>
+
+  <!-- lightning-bolt icon -->
+  <polygon points="133,16 117,40 125,40 121,58 141,32 130,32" fill="#2fa8d6"/>
+
+  <!-- magnifying glass, overlapping the bottom-right corner -->
+  <g filter="url(#glassShadow)">
+    <line x1="153" y1="139" x2="177" y2="163" stroke="#146672" stroke-width="15" stroke-linecap="round"/>
+    <circle cx="131" cy="117" r="29" fill="#eaf7fb" fill-opacity="0.55" stroke="#146672" stroke-width="11"/>
+    <ellipse cx="121" cy="105" rx="9" ry="5.5" fill="#ffffff" opacity="0.6" transform="rotate(-35 121 105)"/>
+  </g>
+</svg>

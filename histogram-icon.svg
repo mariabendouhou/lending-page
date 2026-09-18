@@ -1,0 +1,32 @@
+<svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="arrowGrad" x1="95" y1="140" x2="232" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6a49c"/>
+      <stop offset="1" stop-color="#ee5f52"/>
+    </linearGradient>
+    <linearGradient id="bar5Grad" x1="246" y1="38" x2="246" y2="193" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f4776d"/>
+      <stop offset="1" stop-color="#ec5f53"/>
+    </linearGradient>
+  </defs>
+
+  <!-- baseline -->
+  <rect x="25" y="193" width="260" height="6" rx="3" fill="#a9cdbe"/>
+
+  <!-- bars, rounded top corners only -->
+  <path d="M30,193 L30,158 Q30,148 40,148 L54,148 Q64,148 64,158 L64,193 Z" fill="#a9cdbe"/>
+  <path d="M84,193 L84,138 Q84,128 94,128 L108,128 Q118,128 118,138 L118,193 Z" fill="#93bcaa"/>
+  <path d="M138,193 L138,118 Q138,108 148,108 L162,108 Q172,108 172,118 L172,193 Z" fill="#84b09d"/>
+  <path d="M192,193 L192,83 Q192,73 202,73 L216,73 Q226,73 226,83 L226,193 Z" fill="#5f8a76"/>
+  <path d="M246,193 L246,48 Q246,38 256,38 L270,38 Q280,38 280,48 L280,193 Z" fill="url(#bar5Grad)"/>
+
+  <!-- growth arrow -->
+  <path d="M 95,140 C 130,132 160,110 185,90 C 205,74 215,58 230,42"
+        fill="none" stroke="url(#arrowGrad)" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="0,-15 12,3 -3,3" fill="#ee5f52" transform="translate(233,39) rotate(48)"/>
+
+  <!-- sparkle ticks above the highlighted bar -->
+  <line x1="242" y1="26" x2="234" y2="9" stroke="#ee5f52" stroke-width="4" stroke-linecap="round"/>
+  <line x1="263" y1="21" x2="263" y2="3" stroke="#ee5f52" stroke-width="4" stroke-linecap="round"/>
+  <line x1="284" y1="26" x2="292" y2="9" stroke="#ee5f52" stroke-width="4" stroke-linecap="round"/>
+</svg>

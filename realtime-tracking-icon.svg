@@ -1,0 +1,69 @@
+<svg width="580" height="367" viewBox="0 0 580 367" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="irisGrad" x1="217" y1="129" x2="313" y2="225" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6bc79b"/>
+      <stop offset="1" stop-color="#3f9c74"/>
+    </linearGradient>
+    <linearGradient id="pupilGrad" x1="244" y1="156" x2="286" y2="198" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#215f47"/>
+      <stop offset="1" stop-color="#123d2c"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1c5c40" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- soft concentric scan rings behind everything -->
+  <g fill="none" stroke="#bfe6d3">
+    <circle cx="265" cy="177" r="210" opacity="0.25"/>
+    <circle cx="265" cy="177" r="170" opacity="0.3"/>
+    <circle cx="265" cy="177" r="130" opacity="0.35"/>
+  </g>
+  <circle cx="265" cy="177" r="205" fill="#e8f6ee" opacity="0.35"/>
+  <circle cx="265" cy="177" r="150" fill="#dcf1e5" opacity="0.35"/>
+
+  <!-- wave line, behind eye/card -->
+  <path d="M 35,211
+           C 60,217 85,232 105,249
+           C 130,270 145,290 170,300
+           C 190,308 208,313 230,314
+           C 253,315 272,310 290,300
+           C 308,290 325,278 350,262
+           C 372,247 397,225 420,202
+           C 445,178 472,152 500,134
+           C 507,130 511,130 515,133
+           C 522,138 535,175 545,215"
+        fill="none" stroke="#7ccca6" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- dots on the wave -->
+  <circle cx="35" cy="211" r="8" fill="#6fcca2"/>
+  <circle cx="515" cy="134" r="9" fill="#6fcca2"/>
+
+  <!-- corner scan brackets -->
+  <g fill="none" stroke="#6fcca2" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 148,114 L 148,78 L 183,78"/>
+    <path d="M 350,78 L 385,78 L 385,114"/>
+    <path d="M 148,228 L 148,262 L 183,262"/>
+    <path d="M 350,262 L 385,262 L 385,228"/>
+  </g>
+
+  <!-- eye shape -->
+  <path d="M 143,177
+           C 218,80 312,80 387,177
+           C 332,270 198,270 143,177 Z" fill="#ffffff"/>
+
+  <!-- iris -->
+  <circle cx="265" cy="177" r="48" fill="url(#irisGrad)"/>
+  <circle cx="265" cy="177" r="21" fill="url(#pupilGrad)"/>
+  <circle cx="229" cy="151" r="7" fill="#ffffff"/>
+
+  <!-- chart card -->
+  <rect x="358" y="193" width="214" height="125" rx="20" fill="#ffffff" filter="url(#cardShadow)"/>
+
+  <!-- bars -->
+  <rect x="377" y="278" width="24" height="15" rx="6" fill="#d7f2e6"/>
+  <rect x="410" y="262" width="26" height="31" rx="7" fill="#b7e7d1"/>
+  <rect x="446" y="246" width="27" height="47" rx="8" fill="#93d9bb"/>
+  <rect x="483" y="230" width="28" height="63" rx="9" fill="#5bb890"/>
+  <rect x="521" y="208" width="29" height="85" rx="10" fill="#4aa982"/>
+</svg>
